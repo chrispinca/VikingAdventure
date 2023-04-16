@@ -1,4 +1,4 @@
-package com.example;
+package firstgame;
 
 import static org.junit.Assert.assertTrue;
 
