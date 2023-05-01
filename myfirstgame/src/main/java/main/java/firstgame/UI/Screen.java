@@ -1,5 +1,9 @@
 package main.java.firstgame.UI;
+import java.awt.Component;
+
 import javax.swing.JFrame;
+
+import firstgame.GamePanel;
 
 /**
  * Hello world!
@@ -7,13 +11,17 @@ import javax.swing.JFrame;
  */
 public class Screen 
 {
-    public static void createScreen()
+    public static void createScreen(Component _panel)
     {
         JFrame window = new JFrame();
-        window.setSize(1200,800);
         window.setResizable(false);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setTitle("Game Screen");
+        
+        window.add(_panel);
+
+        window.pack();
+
         window.setLocationRelativeTo(null);
         window.setVisible(true);
     }

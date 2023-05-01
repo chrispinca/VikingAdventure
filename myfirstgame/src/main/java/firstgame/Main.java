@@ -10,6 +10,7 @@ public class Main
 {
     public static void main( String[] args )
     {
-        Screen.createScreen();
+        GamePanel gamePanel = new GamePanel();
+        Screen.createScreen(gamePanel);
     }
 }
