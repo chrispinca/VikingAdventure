@@ -1,9 +1,7 @@
-package main.java.firstgame.UI;
+package firstgame.UI;
 import java.awt.Component;
 
 import javax.swing.JFrame;
-
-import firstgame.GamePanel;
 
 /**
  * Hello world!

@@ -1,6 +1,6 @@
-package firstgame;
-import javax.swing.JFrame;
-import main.java.firstgame.UI.Screen;
+package firstgame.main;
+
+import firstgame.UI.Screen;
 
 /**
  * Hello world!
@@ -12,5 +12,6 @@ public class Main
     {
         GamePanel gamePanel = new GamePanel();
         Screen.createScreen(gamePanel);
+        gamePanel.startGameThread();
     }
 }
