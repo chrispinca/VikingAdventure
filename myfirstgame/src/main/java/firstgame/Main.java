@@ -6,7 +6,7 @@ import main.java.firstgame.UI.Screen;
  * Hello world!
  *
  */
-public class App 
+public class Main 
 {
     public static void main( String[] args )
     {
