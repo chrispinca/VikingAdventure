@@ -11,12 +11,12 @@ import java.awt.Color;
 public class GamePanel extends JPanel implements Runnable{
 
     //Setting the Screen settings
-    final int initialTileSize = 16;
+    final int initialTileSize = 32;
     final int scale = 3; //scale for TileSize
 
     public final int tileSize = initialTileSize * scale; //48x48 actual tile size on screen
-    final int maxScreenCol = 16;
-    final int maxScreenRow = 12;
+    final int maxScreenCol = 8;
+    final int maxScreenRow = 6;
     final int screenWidth = tileSize * maxScreenCol; 
     final int screenHeight = tileSize * maxScreenRow;
 
