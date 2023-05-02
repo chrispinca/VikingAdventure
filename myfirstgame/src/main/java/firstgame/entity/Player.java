@@ -1,14 +1,13 @@
 package firstgame.entity;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import firstgame.main.GamePanel;
-import firstgame.main.KeyHandler;
+import firstgame.GameFramework.GamePanel;
+import firstgame.GameFramework.KeyHandler;
 
 public class Player extends Entity {
     GamePanel gp;
@@ -39,36 +38,36 @@ public class Player extends Entity {
     public void getPlayerImage() {
         try {
             walkRightFrames = new BufferedImage[] {
-                ImageIO.read(getClass().getResourceAsStream("/resources/player/Walk/walk1.png")),
-                ImageIO.read(getClass().getResourceAsStream("/resources/player/Walk/walk2.png")),
-                ImageIO.read(getClass().getResourceAsStream("/resources/player/Walk/walk3.png")),
-                ImageIO.read(getClass().getResourceAsStream("/resources/player/Walk/walk4.png")),
-                ImageIO.read(getClass().getResourceAsStream("/resources/player/Walk/walk5.png")),
-                ImageIO.read(getClass().getResourceAsStream("/resources/player/Walk/walk6.png"))
+                ImageIO.read(getClass().getResourceAsStream("/player/Walk/walk1.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/Walk/walk2.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/Walk/walk3.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/Walk/walk4.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/Walk/walk5.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/Walk/walk6.png"))
             };
 
             walkLeftFrames = new BufferedImage[] {
-                ImageIO.read(getClass().getResourceAsStream("/resources/player/Walk/walkLeft1.png")),
-                ImageIO.read(getClass().getResourceAsStream("/resources/player/Walk/walkLeft2.png")),
-                ImageIO.read(getClass().getResourceAsStream("/resources/player/Walk/walkLeft3.png")),
-                ImageIO.read(getClass().getResourceAsStream("/resources/player/Walk/walkLeft4.png")),
-                ImageIO.read(getClass().getResourceAsStream("/resources/player/Walk/walkLeft5.png")),
-                ImageIO.read(getClass().getResourceAsStream("/resources/player/Walk/walkLeft6.png"))
+                ImageIO.read(getClass().getResourceAsStream("/player/Walk/walkLeft1.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/Walk/walkLeft2.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/Walk/walkLeft3.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/Walk/walkLeft4.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/Walk/walkLeft5.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/Walk/walkLeft6.png"))
             };
 
             idleFrames = new BufferedImage[] {
-                ImageIO.read(getClass().getResourceAsStream("/resources/player/idle/idle1.png")),
-                ImageIO.read(getClass().getResourceAsStream("/resources/player/idle/idle2.png")),
-                ImageIO.read(getClass().getResourceAsStream("/resources/player/idle/idle3.png")),
-                ImageIO.read(getClass().getResourceAsStream("/resources/player/idle/idle4.png")),
-                ImageIO.read(getClass().getResourceAsStream("/resources/player/idle/idle5.png")),
-                ImageIO.read(getClass().getResourceAsStream("/resources/player/idle/idle6.png")),
-                ImageIO.read(getClass().getResourceAsStream("/resources/player/idle/idle7.png")),
-                ImageIO.read(getClass().getResourceAsStream("/resources/player/idle/idle8.png")),
-                ImageIO.read(getClass().getResourceAsStream("/resources/player/idle/idle9.png")),
-                ImageIO.read(getClass().getResourceAsStream("/resources/player/idle/idle10.png")),
-                ImageIO.read(getClass().getResourceAsStream("/resources/player/idle/idle11.png")),
-                ImageIO.read(getClass().getResourceAsStream("/resources/player/idle/idle12.png"))
+                ImageIO.read(getClass().getResourceAsStream("/player/idle/idle1.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/idle/idle2.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/idle/idle3.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/idle/idle4.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/idle/idle5.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/idle/idle6.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/idle/idle7.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/idle/idle8.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/idle/idle9.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/idle/idle10.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/idle/idle11.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/idle/idle12.png"))
             };
 
         }catch(IOException e) {

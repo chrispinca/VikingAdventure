@@ -1,4 +1,4 @@
-package firstgame.main;
+package firstgame.GameFramework;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;

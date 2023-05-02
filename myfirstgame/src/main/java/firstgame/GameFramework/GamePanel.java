@@ -1,4 +1,4 @@
-package firstgame.main;
+package firstgame.GameFramework;
 import javax.swing.JPanel;
 
 import firstgame.entity.Player;
@@ -23,14 +23,16 @@ public class GamePanel extends JPanel implements Runnable{
     //FPS
     int FPS = 60;
 
+    //Set default player position and speed
+    int playerX = 100;
+    int playerY = 100;
+    int playerSpeed = 4;
+
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
     Player player = new Player(this, keyH);
 
-    //Set default player position
-    int playerX = 100;
-    int playerY = 100;
-    int playerSpeed = 4;
+    
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -79,7 +81,6 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void update() {
-        
         player.update();
     }
 
