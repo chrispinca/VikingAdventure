@@ -1,5 +1,6 @@
-package firstgame.main;
+package firstgame;
 
+import firstgame.GameFramework.GamePanel;
 import firstgame.UI.Screen;
 
 /**
@@ -11,7 +12,7 @@ public class Main
     public static void main( String[] args )
     {
         GamePanel gamePanel = new GamePanel();
-        Screen.createScreen(gamePanel);
         gamePanel.startGameThread();
+        Screen.createScreen(gamePanel);
     }
 }
