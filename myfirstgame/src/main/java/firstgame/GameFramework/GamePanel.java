@@ -1,12 +1,27 @@
 package firstgame.GameFramework;
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import firstgame.entity.Player;
+import firstgame.entity.Levels.LevelHandler;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Color;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.*;
+
 
 public class GamePanel extends JPanel implements Runnable{
 
@@ -15,8 +30,8 @@ public class GamePanel extends JPanel implements Runnable{
     final int scale = 3; //scale for TileSize
 
     public final int tileSize = initialTileSize * scale; //48x48 actual tile size on screen
-    final int maxScreenCol = 8;
-    final int maxScreenRow = 6;
+    final int maxScreenCol = 20;
+    final int maxScreenRow = 15;
     final int screenWidth = tileSize * maxScreenCol; 
     final int screenHeight = tileSize * maxScreenRow;
 
@@ -32,8 +47,6 @@ public class GamePanel extends JPanel implements Runnable{
     Thread gameThread;
     Player player = new Player(this, keyH);
 
-    
-
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.black);
@@ -42,7 +55,7 @@ public class GamePanel extends JPanel implements Runnable{
         this.setFocusable(true);
     }
 
-    public void startGameThread() {
+    public void startGameThread() { 
         gameThread = new Thread(this);
         gameThread.start();
     }
@@ -87,8 +100,22 @@ public class GamePanel extends JPanel implements Runnable{
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
+        Image backgroundImage = null;
+        try {
+            backgroundImage = ImageIO.read(new File("/Background/Background_01.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         Graphics2D g2 = (Graphics2D)g;
+
+        g2.drawImage(backgroundImage, 0, 0, screenWidth, screenHeight, null);
+
+        LevelHandler level = new LevelHandler("C:/Users/Chris/Desktop/personalgameproj/myfirstgame/src/main/resources/player/Walk/maptest.json");
+
+        level.draw(g2);
         player.draw(g2);
+    
         g2.dispose();
     }
     

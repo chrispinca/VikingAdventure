@@ -16,7 +16,15 @@ public class Player extends Entity {
     private BufferedImage[] walkRightFrames;
     private BufferedImage[] walkLeftFrames;
     private BufferedImage[] idleFrames;
+    private BufferedImage[] jumpFrames;
+    private BufferedImage[] highJumpFrames;
     private BufferedImage[] currentSprites;
+
+    private boolean isJumping = false;
+    private int jumpHeight = 50;
+    private int jumpDuration = 30;
+    private int jumpCounter = 0;
+
     private int length = 0;
 
     public Player(GamePanel gp, KeyHandler keyH) {
@@ -70,8 +78,39 @@ public class Player extends Entity {
                 ImageIO.read(getClass().getResourceAsStream("/player/idle/idle12.png"))
             };
 
+            jumpFrames = new BufferedImage[] {
+                ImageIO.read(getClass().getResourceAsStream("/player/Jump/jump1.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/Jump/jump2.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/Jump/jump3.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/Jump/jump4.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/Jump/jump5.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/Jump/jump6.png"))
+            };
+
+            highJumpFrames = new BufferedImage[] {
+                ImageIO.read(getClass().getResourceAsStream("/player/High_Jump/high_jump1.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/High_Jump/high_jump2.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/High_Jump/high_jump3.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/High_Jump/high_jump4.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/High_Jump/high_jump5.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/High_Jump/high_jump6.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/High_Jump/high_jump7.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/High_Jump/high_jump8.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/High_Jump/high_jump9.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/High_Jump/high_jump10.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/High_Jump/high_jump11.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/High_Jump/high_jump12.png"))
+            };
+
         }catch(IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void jump() {
+        if(!isJumping) {
+            isJumping = true;
+            jumpCounter = 0;
         }
     }
 
@@ -89,6 +128,17 @@ public class Player extends Entity {
         } else if (keyH.rightPressed == true) {
             direction = "right";
             x += speed;
+        } else if (keyH.spacePressed == true) {
+            direction = "jump";
+            if (isJumping) {
+                y -= jumpHeight / jumpDuration * jumpCounter * (jumpCounter - jumpDuration);
+                jumpCounter++;
+
+                if (jumpCounter >= jumpDuration) {
+                    isJumping = false;
+                }
+
+            }
         } else {
             direction = "idle";
         }
@@ -102,10 +152,14 @@ public class Player extends Entity {
             if (spriteNum > 6) spriteNum = 1;
             currentSprites = walkLeftFrames;
             length = walkLeftFrames.length;
+        } else if (direction.equals("jump")) {
+            if (spriteNum > 6) spriteNum = 1;
+            currentSprites = jumpFrames;
+            length = jumpFrames.length;
         } else if (direction.equals("idle")) {
             currentSprites = idleFrames;
             length = idleFrames.length;
-        }
+        } 
 
         spriteCounter++;
         if (spriteCounter > 8) {
