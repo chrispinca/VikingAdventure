@@ -4,6 +4,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import firstgame.entity.Player;
+import firstgame.entity.Levels.Tile;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -27,7 +28,7 @@ public class LevelHandler {
     private int[][] grid;
     private int numRows;
     private int numCols;
-    private Image grass;
+    protected Tile[] tile;
     
     public LevelHandler(String filename) {
         try {
@@ -59,17 +60,29 @@ public class LevelHandler {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        tile = new Tile[10];
+        getTileImage();
+    }
+    
 
-        // Load the image file
+    public void getTileImage() {
+            // Load the image file
     try {
-        grass = ImageIO.read(getClass().getResourceAsStream("/Platformer/Ground_11.png")); // replace with your image path
+
+        tile[0] = new Tile(); //grass tile
+        tile[0].image = ImageIO.read(getClass().getResourceAsStream("/Platformer/Ground_11.png"));
+
+        tile[1] = new Tile(); //Dirt + rock tile
+        tile[1].image = ImageIO.read(getClass().getResourceAsStream("/Platformer/Ground_02.png"));
+
+        tile[2] = new Tile(); //Dirt tile
+        tile[2].image = ImageIO.read(getClass().getResourceAsStream("/Platformer/Ground_06.png"));
+
     } catch (IOException e) {
         e.printStackTrace();
     }
     }
-    
 
-    
     public void draw(Graphics2D g) {
         g.setColor(Color.WHITE);
         for (int i = 0; i < numRows; i++) {
@@ -79,13 +92,11 @@ public class LevelHandler {
                     // Draw a solid tile
                     g.fillRect(j * tileSize, i * tileSize, tileSize, tileSize);
                 } else if (tileType == 2) {
-                    g.setColor(Color.PINK);
-                    g.fillRect(j * tileSize, i * tileSize, tileSize, tileSize);
+                    g.drawImage(tile[2].image, j * tileSize, i * tileSize, tileSize, tileSize, null);
                 } else if (tileType == 14) {
-                    g.drawImage(grass, j * tileSize, i * tileSize, tileSize, tileSize, null);
+                    g.drawImage(tile[0].image, j * tileSize, i * tileSize, tileSize, tileSize, null);
                 } else if (tileType == 19) {
-                    g.setColor(Color.RED);
-                    g.fillRect(j * tileSize, i * tileSize, tileSize, tileSize);
+                    g.drawImage(tile[1].image, j * tileSize, i * tileSize, tileSize, tileSize, null);
                 } else if (tileType == 3) {
                     g.setColor(Color.BLUE);
                     g.fillRect(j * tileSize, i * tileSize, tileSize, tileSize);

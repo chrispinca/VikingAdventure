@@ -9,6 +9,8 @@ import javax.imageio.ImageIO;
 import firstgame.GameFramework.GamePanel;
 import firstgame.GameFramework.KeyHandler;
 
+import java.awt.Rectangle;
+
 public class Player extends Entity {
     GamePanel gp;
     KeyHandler keyH;
@@ -25,6 +27,10 @@ public class Player extends Entity {
     private int jumpDuration = 30;
     private int jumpCounter = 0;
 
+    private float x, y;
+    private int width, height;
+    private Rectangle hitbox;
+
     private int length = 0;
 
     public Player(GamePanel gp, KeyHandler keyH) {
@@ -33,6 +39,11 @@ public class Player extends Entity {
         this.keyH = keyH;
 
         setDefaultValues();
+
+        this.width = width;
+        this.height = height;
+        this.hitbox = new Rectangle();
+
         getPlayerImage();
     }
 
@@ -116,6 +127,8 @@ public class Player extends Entity {
 
     public void update() {
 
+        updateHitbox();
+
         if (keyH.upPressed == true) {
             direction = "up";
             y -= speed;
@@ -170,7 +183,8 @@ public class Player extends Entity {
 
     public void draw(Graphics2D g2) {
        BufferedImage image = currentSprites[spriteNum - 1];
-       g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
+       g2.drawImage(image, (int)x,(int) y, gp.tileSize, gp.tileSize, null);
+       drawHitbox(g2);
 
     }
 }
