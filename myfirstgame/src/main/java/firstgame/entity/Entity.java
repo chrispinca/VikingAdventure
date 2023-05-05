@@ -13,6 +13,7 @@ public abstract class Entity {
     public static int spriteNum = 1;
     protected int width, height;
     protected Rectangle hitbox;
+    public boolean collisionOn = false;
 
         public Entity() {
             this.x = x;
@@ -31,7 +32,8 @@ public abstract class Entity {
         private void initHitbox() {
             hitbox = new Rectangle((int)x, (int)y, width, height);
         }
-        protected void updateHitbox() {
+
+        public void updateHitbox() {
             hitbox.x = (int)x; 
             hitbox.y = (int)y;
         }

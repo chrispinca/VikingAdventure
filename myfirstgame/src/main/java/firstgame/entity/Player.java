@@ -1,5 +1,6 @@
 package firstgame.entity;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -27,7 +28,7 @@ public class Player extends Entity {
     private int jumpDuration = 30;
     private int jumpCounter = 0;
 
-    private float x, y;
+    protected float x, y;
     private int width, height;
     private Rectangle hitbox;
 
@@ -38,12 +39,9 @@ public class Player extends Entity {
         this.gp = gp;
         this.keyH = keyH;
 
+        hitbox = new Rectangle();
+
         setDefaultValues();
-
-        this.width = width;
-        this.height = height;
-        this.hitbox = new Rectangle();
-
         getPlayerImage();
     }
 
@@ -127,8 +125,6 @@ public class Player extends Entity {
 
     public void update() {
 
-        updateHitbox();
-
         if (keyH.upPressed == true) {
             direction = "up";
             y -= speed;
@@ -174,6 +170,8 @@ public class Player extends Entity {
             length = idleFrames.length;
         } 
 
+        updateHitbox();
+
         spriteCounter++;
         if (spriteCounter > 8) {
             spriteNum = (spriteNum % length) + 1;
@@ -184,7 +182,10 @@ public class Player extends Entity {
     public void draw(Graphics2D g2) {
        BufferedImage image = currentSprites[spriteNum - 1];
        g2.drawImage(image, (int)x,(int) y, gp.tileSize, gp.tileSize, null);
-       drawHitbox(g2);
+       
+       g2.setColor(Color.BLACK);
+       //best fit for the player character sprite hitbox to be implemented
+       g2.drawRect((int) (x+21),(int) (y+55), gp.tileSize/3 - 10, gp.tileSize/3-5);
 
     }
 }

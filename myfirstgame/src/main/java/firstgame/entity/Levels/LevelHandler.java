@@ -1,18 +1,9 @@
 package firstgame.entity.Levels;
 
 import javax.imageio.ImageIO;
-import javax.swing.JPanel;
-
-import firstgame.entity.Player;
-import firstgame.entity.Levels.Tile;
-
-import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.Color;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -71,12 +62,15 @@ public class LevelHandler {
 
         tile[0] = new Tile(); //grass tile
         tile[0].image = ImageIO.read(getClass().getResourceAsStream("/Platformer/Ground_11.png"));
+        tile[0].collision = true;
 
         tile[1] = new Tile(); //Dirt + rock tile
         tile[1].image = ImageIO.read(getClass().getResourceAsStream("/Platformer/Ground_02.png"));
+        tile[1].collision = true;
 
         tile[2] = new Tile(); //Dirt tile
         tile[2].image = ImageIO.read(getClass().getResourceAsStream("/Platformer/Ground_06.png"));
+        tile[2].collision = true;
 
     } catch (IOException e) {
         e.printStackTrace();
@@ -100,7 +94,7 @@ public class LevelHandler {
                 } else if (tileType == 3) {
                     g.setColor(Color.BLUE);
                     g.fillRect(j * tileSize, i * tileSize, tileSize, tileSize);
-                } else if (tileType == 5) {
+                } else if (tileType == 0) {
                     g.setColor(Color.ORANGE);
                     g.fillRect(j * tileSize, i * tileSize, tileSize, tileSize);
                 }
