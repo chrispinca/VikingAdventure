@@ -4,13 +4,16 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Hashtable;
 
 import javax.imageio.ImageIO;
 
 import firstgame.GameFramework.GamePanel;
 import firstgame.GameFramework.KeyHandler;
+import firstgame.entity.Levels.Tile;
 
 import java.awt.Rectangle;
+
 
 public class Player extends Entity {
     GamePanel gp;
@@ -28,7 +31,8 @@ public class Player extends Entity {
     private int jumpDuration = 30;
     private int jumpCounter = 0;
 
-    protected float x, y;
+    public int x;
+    public int y;
     private int width, height;
     private Rectangle hitbox;
 
@@ -39,10 +43,10 @@ public class Player extends Entity {
         this.gp = gp;
         this.keyH = keyH;
 
-        hitbox = new Rectangle();
-
+        initHitbox(gp.level.tileSize - 10, gp.level.tileSize-5);
         setDefaultValues();
         getPlayerImage();
+        
     }
 
     public void setDefaultValues() {
@@ -50,6 +54,7 @@ public class Player extends Entity {
         y = 100;
         speed = 4;
         direction = "idle";
+        
     }
 
     public void getPlayerImage() {
@@ -127,16 +132,16 @@ public class Player extends Entity {
 
         if (keyH.upPressed == true) {
             direction = "up";
-            y -= speed;
+            
         } else if (keyH.downPressed == true) {
             direction = "down";
-            y += speed;
+            
         } else if (keyH.leftPressed == true) {
             direction = "left";
-            x -= speed;
+            
         } else if (keyH.rightPressed == true) {
             direction = "right";
-            x += speed;
+            
         } else if (keyH.spacePressed == true) {
             direction = "jump";
             if (isJumping) {
@@ -151,6 +156,30 @@ public class Player extends Entity {
         } else {
             direction = "idle";
         }
+
+        collisionOn = false;
+        gp.checkCollision.checkTile(this, gp.level);
+
+        if(collisionOn == false) {
+           switch(direction) {
+            case "up":
+            y -= speed;
+            break;
+            case "down":
+            y += speed;
+            break;
+            case "left":
+            x -= speed;
+            break;
+            case "right":
+            x += speed;
+            break;
+
+           }
+        }
+
+
+        gp.checkImage(null, width, height, gp);
 
         //Set sprite array to current direction
         if (direction.equals("right")) {
@@ -168,9 +197,24 @@ public class Player extends Entity {
         } else if (direction.equals("idle")) {
             currentSprites = idleFrames;
             length = idleFrames.length;
-        } 
+        }     // Check collision with the boundaries of the game panel
+        if (x < 0) {
+            x = 0;
+        }
+        if (x + width > gp.getWidth()) {
+            x = gp.getWidth() - width;
+        }
+        if (y < 0) {
+            y = 0;
+        }
+        if (y + height > gp.getHeight()) {
+            y = gp.getHeight() - height;
+        }
+    
 
-        updateHitbox();
+        updateHitbox(x+21, y+55);
+
+        
 
         spriteCounter++;
         if (spriteCounter > 8) {
@@ -181,11 +225,20 @@ public class Player extends Entity {
 
     public void draw(Graphics2D g2) {
        BufferedImage image = currentSprites[spriteNum - 1];
-       g2.drawImage(image, (int)x,(int) y, gp.tileSize, gp.tileSize, null);
+       g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
        
        g2.setColor(Color.BLACK);
        //best fit for the player character sprite hitbox to be implemented
-       g2.drawRect((int) (x+21),(int) (y+55), gp.tileSize/3 - 10, gp.tileSize/3-5);
+       drawHitbox(g2);
+       //g2.drawRect((int) (x+21),(int) (y+55), gp.tileSize/3 - 10, gp.tileSize/3-5);
 
+    }
+
+    public int getPlayerX() {
+        return x;
+    }
+
+    public int getPlayerY() {
+        return y;
     }
 }

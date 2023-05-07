@@ -18,13 +18,14 @@ public class GamePanel extends JPanel implements Runnable{
 
     //Setting the Screen settings
     final int initialTileSize = 32;
-    final int scale = 3; //scale for TileSize
+    public final int scale = 3; //scale for TileSize
 
-    public final int tileSize = initialTileSize * scale; //48x48 actual tile size on screen
+    public final int tileSize = initialTileSize * scale;
     final int maxScreenCol = 10;
     final int maxScreenRow = 7;
     final int screenWidth = tileSize * maxScreenCol; 
     final int screenHeight = tileSize * maxScreenRow;
+    
 
     //FPS
     int FPS = 60;
@@ -37,8 +38,12 @@ public class GamePanel extends JPanel implements Runnable{
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
 
+    public LevelHandler level = new LevelHandler("C:/Users/Chris/Desktop/personalgameproj/myfirstgame/src/main/resources/player/Walk/maptest.json");
+
     Player player = new Player(this, keyH);
-    public CollisionHandler hitboxCheck = new CollisionHandler(this);
+    public CollisionHandler checkCollision = new CollisionHandler(this);
+
+    
     
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -87,6 +92,7 @@ public class GamePanel extends JPanel implements Runnable{
     }
 
     public void update() {
+    
         player.update();
     }
 
@@ -103,8 +109,6 @@ public class GamePanel extends JPanel implements Runnable{
         Graphics2D g2 = (Graphics2D)g;
 
         //g2.drawImage(backgroundImage, 0, 0, screenWidth, screenHeight, null);
-
-        LevelHandler level = new LevelHandler("C:/Users/Chris/Desktop/personalgameproj/myfirstgame/src/main/resources/player/Walk/maptest.json");
 
         level.draw(g2);
         player.draw(g2);

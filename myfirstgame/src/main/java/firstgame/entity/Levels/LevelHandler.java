@@ -1,5 +1,6 @@
 package firstgame.entity.Levels;
 
+
 import javax.imageio.ImageIO;
 import java.awt.Graphics2D;
 import java.awt.Color;
@@ -9,14 +10,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import firstgame.entity.Levels.Tile;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.*;
 
 public class LevelHandler {
-    private int tileSize;
-    private int[][] grid;
+    public int tileSize;
+    public int[][] grid;
+    public Tile[][] tileMap;
     private int numRows;
     private int numCols;
     protected Tile[] tile;
@@ -39,6 +42,8 @@ public class LevelHandler {
             numRows = gridArray.length();
             numCols = gridArray.getJSONArray(0).length();
             grid = new int[numRows][numCols];
+            tileMap = new Tile[numRows][numCols];
+
     
             // Convert the JSON array to a 2D integer array
             for (int i = 0; i < numRows; i++) {
@@ -47,6 +52,8 @@ public class LevelHandler {
                     grid[i][j] = rowArray.getInt(j);
                 }
             }
+
+        
     
         } catch (IOException e) {
             e.printStackTrace();
@@ -60,21 +67,61 @@ public class LevelHandler {
             // Load the image file
     try {
 
-        tile[0] = new Tile(); //grass tile
+        tile[0] = new Tile(false); //grass tile
         tile[0].image = ImageIO.read(getClass().getResourceAsStream("/Platformer/Ground_11.png"));
-        tile[0].collision = true;
+        tile[0].collision = false;
 
-        tile[1] = new Tile(); //Dirt + rock tile
+        tile[1] = new Tile(true); //Dirt + rock tile
         tile[1].image = ImageIO.read(getClass().getResourceAsStream("/Platformer/Ground_02.png"));
         tile[1].collision = true;
 
-        tile[2] = new Tile(); //Dirt tile
+        tile[2] = new Tile(true); //Dirt tile
         tile[2].image = ImageIO.read(getClass().getResourceAsStream("/Platformer/Ground_06.png"));
         tile[2].collision = true;
+
+        tile[3] = new Tile(true); //Dirt tile
+        tile[3].image = ImageIO.read(getClass().getResourceAsStream("/Platformer/Ground_06.png"));
+        tile[3].collision = true;
 
     } catch (IOException e) {
         e.printStackTrace();
     }
+
+    // Populate tileMap
+    for (int i = 0; i < numRows; i++) {
+        for (int j = 0; j < numCols; j++) {
+            int x = numCols * tileSize;
+            int y = numRows * tileSize;
+            int tileType = grid[i][j];
+            if (tileType == 1) {
+                tileMap[i][j] = tile[1];
+                tileMap[i][j].initTileHitbox(x, y, tileSize, tileSize);
+            } else if (tileType == 2) {
+                tileMap[i][j] = tile[2];
+                tileMap[i][j].initTileHitbox(x, y, tileSize, tileSize);
+            } else if (tileType == 14) {
+                tileMap[i][j] = tile[1];
+                tileMap[i][j].initTileHitbox(x, y, tileSize, tileSize);
+            } else if (tileType == 19) {
+                tileMap[i][j] = tile[1];
+                tileMap[i][j].initTileHitbox(x, y, tileSize, tileSize);
+            } else if (tileType == 3) {
+                tileMap[i][j] = tile[3];
+                tileMap[i][j].initTileHitbox(x, y, tileSize, tileSize);
+            } else if (tileType == 0) {
+                tileMap[i][j] = tile[0];
+                tileMap[i][j].initTileHitbox(x, y, tileSize, tileSize);
+            } else {
+                tileMap[i][j] = tile[1];
+                tileMap[i][j].initTileHitbox(x, y, tileSize, tileSize);
+            }
+        }
+    }
+
+    }
+
+    public int getTileSize() {
+        return tileSize;
     }
 
     public void draw(Graphics2D g) {
@@ -100,5 +147,37 @@ public class LevelHandler {
                 }
             }
         }
+        for (int row = 0; row < numRows; row++) {
+            for (int col = 0; col < numCols; col++) {
+              if (tileMap[row][col].collision == true) {
+                int x = col * tileSize;
+                int y = row * tileSize;
+                g.setColor(Color.GREEN);
+                g.drawRect(x, y, tileSize, tileSize);
+              }
+            }
+          }
+          
+    }
+
+
+    public int getNumCols() {
+        return numCols;
+    }
+
+    public int getNumRows() {
+        return numRows;
+    }
+
+    public int getTileType(int row, int col) {
+        return grid[row][col];
+    }
+    
+    public Tile getTile(int row, int col) {
+        int tileId = getTileType(row, col);
+        if (tileId >= 0 && tileId < tile.length) {
+            return tile[tileId];
+        }
+        return null;
     }
 }

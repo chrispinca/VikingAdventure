@@ -6,21 +6,16 @@ import java.awt.Rectangle;
 
 //values belonging to any object of type Entity
 public abstract class Entity {
-    public float x, y;
+    public int x, y;
     public int speed;
     public String direction;
     public int spriteCounter = 0;
     public static int spriteNum = 1;
-    protected int width, height;
+    public int width, height;
     protected Rectangle hitbox;
     public boolean collisionOn = false;
 
         public Entity() {
-            this.x = x;
-            this.y = y;
-            this.width = width;
-            this.height = height;
-            initHitbox();
         }
 
         protected void drawHitbox(Graphics g) {
@@ -29,17 +24,33 @@ public abstract class Entity {
             g.drawRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height);
         }
 
-        private void initHitbox() {
-            hitbox = new Rectangle((int)x, (int)y, width, height);
+        protected void initHitbox(int width, int height) {
+            hitbox = new Rectangle(x, y, width, height);
         }
 
-        public void updateHitbox() {
-            hitbox.x = (int)x; 
-            hitbox.y = (int)y;
+        public void updateHitbox(int x, int y) {
+            hitbox.x = x; 
+            hitbox.y = y;
         }
         public Rectangle getHitbox() {
             return hitbox;
         }
+        public int getHitboxX() {
+            return hitbox.x;
+        }
+        
+        public int getHitboxY() {
+            return hitbox.y;
+        }
+        
+        public int getHitboxWidth() {
+            return hitbox.width;
+        }
+        
+        public int getHitboxHeight() {
+            return hitbox.height;
+        }
+        
 }
 
 
