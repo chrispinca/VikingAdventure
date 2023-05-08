@@ -7,28 +7,34 @@ import firstgame.entity.Levels.Tile;
 
 public class CollisionHandler {
 
+    int entityLeftX, entityRightX, entityTopY, 
+    entityBottomY, entityTopRow, entityBottomRow, 
+    entityLeftCol, entityRightCol;
+        
+    Tile tileNum1, tileNum2 = null;
+
     GamePanel gp;
     
     public CollisionHandler(GamePanel gp) {
         this.gp = gp;
     }
 
+    //makes the calculations for the player's hitbox and accounts for the displacement of the actual hitbox vs the entire player tile
+    public void collisionCalc(Player entityy, LevelHandler level) {
+        entityLeftX = entityy.x + 21;
+        entityRightX = entityy.x + 21+ entityy.getHitboxWidth();
+        entityTopY = entityy.y + 55;
+        entityBottomY = entityy.y+ 55 + entityy.getHitboxHeight();
+
+        entityTopRow = entityTopY / level.getTileSize();
+        entityBottomRow = entityBottomY / level.getTileSize();
+        entityLeftCol = entityLeftX / level.getTileSize();
+        entityRightCol = entityRightX / level.getTileSize();
+    }
+
+    //checks for collision with the closest two tiles in the direction the player is moving in
     public void checkTile(Player entityy, LevelHandler level) {
-
-       
-
-        int entityLeftX = entityy.x + 21;
-        int entityRightX = entityy.x + 21+ entityy.getHitboxWidth();
-        int entityTopY = entityy.y + 55;
-        int entityBottomY = entityy.y+ 55 + entityy.getHitboxHeight();
-
-
-        int entityTopRow = entityTopY / level.getTileSize();
-        int entityBottomRow = entityBottomY / level.getTileSize();
-        int entityLeftCol = entityLeftX / level.getTileSize();
-        int entityRightCol = entityRightX / level.getTileSize();
-        
-        Tile tileNum1, tileNum2 = null;
+        collisionCalc(entityy, level);
 
         switch(entityy.direction) {
             case "up":
@@ -65,11 +71,7 @@ public class CollisionHandler {
                     entityy.collisionOn = true;
                 }
                 break;
-            
         }
-    
     }
-    
-    
 }
 

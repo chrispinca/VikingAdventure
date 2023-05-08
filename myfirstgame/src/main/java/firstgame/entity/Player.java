@@ -38,11 +38,13 @@ public class Player extends Entity {
         this.gp = gp;
         this.keyH = keyH;
 
+        //Initializes the hitbox, sets default player values and loads the player animation image arrays
         initHitbox(gp.level.tileSize - 10, gp.level.tileSize-5);
         setDefaultValues();
         loadPlayerImage();    
     }
 
+    //Sets default player x and y coordinates, speed and animation 
     public void setDefaultValues() {
         x = 100;
         y = 100;
@@ -50,6 +52,7 @@ public class Player extends Entity {
         direction = "idle";
     }
 
+    //Loads the player images into an array responsible for player movement animation based on direction
     public void loadPlayerImage() {
         try {
             walkRightFrames = new BufferedImage[] {
@@ -121,6 +124,7 @@ public class Player extends Entity {
         }
     }
 
+    //Updates the player state
     public void update() {
 
         handleInput();
@@ -132,9 +136,9 @@ public class Player extends Entity {
     
         updateHitbox(x+21, y+55);
         animationLoop();
-
             } 
 
+    //Handles the keyboard input and sets the direction based on the key pressed
     public void handleInput() {
         if (keyH.upPressed == true) {
             direction = "up";
@@ -157,13 +161,13 @@ public class Player extends Entity {
                 if (jumpCounter >= jumpDuration) {
                     isJumping = false;
                 }
-
             }
         } else {
             direction = "idle";
         }
     }
 
+    //Updates the player current animation and sets the length variable to the size of the specific direction animation array 
     public void updateAnimation() {
         //Set sprite array to current direction
         if (direction.equals("right")) {
@@ -184,6 +188,7 @@ public class Player extends Entity {
         }
     }
 
+    //Moves player on screen based on x and y coordinates if no collision exists 
     public void movePlayer() {
         if(collisionOn == false) {
             switch(direction) {
@@ -204,11 +209,13 @@ public class Player extends Entity {
          }
     }
 
+    //Checks for collision
     public void checkCollision() {
         collisionOn = false;
         gp.checkCollision.checkTile(this, gp.level);
     }
 
+    //Loop for animations to play based on size of the specified direction animation movement array
     public void animationLoop() {
         spriteCounter++;
         if (spriteCounter > 8) {
@@ -217,6 +224,7 @@ public class Player extends Entity {
         }
     }
 
+    //draws the player and animation images on the screen
     public void draw(Graphics2D g2) {
        BufferedImage image = currentSprites[spriteNum - 1];
        g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
@@ -227,10 +235,12 @@ public class Player extends Entity {
        //g2.drawRect((int) (x+21),(int) (y+55), gp.tileSize/3 - 10, gp.tileSize/3-5);
     }
 
+    //Gets the player's x coordinate
     public int getPlayerX() {
         return x;
     }
 
+    //Gets the player's y coordinate
     public int getPlayerY() {
         return y;
     }
