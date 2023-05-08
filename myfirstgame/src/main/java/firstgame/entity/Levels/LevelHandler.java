@@ -25,6 +25,15 @@ public class LevelHandler {
     protected Tile[] tile;
     
     public LevelHandler(String filename) {
+        
+        tile = new Tile[10];
+        loadGrid(filename);
+        getTileImage();
+        loadTileMap();
+    }
+    
+    //Loads the json map grid into a 2D array of integers
+    public void loadGrid(String filename) {
         try {
             // Load the map data from a JSON file
             BufferedReader reader = new BufferedReader(new FileReader(filename));
@@ -52,19 +61,13 @@ public class LevelHandler {
                     grid[i][j] = rowArray.getInt(j);
                 }
             }
-
-        
-    
         } catch (IOException e) {
             e.printStackTrace();
         }
-        tile = new Tile[10];
-        getTileImage();
     }
-    
 
     public void getTileImage() {
-            // Load the image file
+            // Load the image file for each tile and set collision value
     try {
 
         tile[0] = new Tile(false); //grass tile
@@ -85,9 +88,12 @@ public class LevelHandler {
 
     } catch (IOException e) {
         e.printStackTrace();
+        }
     }
 
-    // Populate tileMap
+    //Loads a 2D array of tiles for collision checking and creates hitboxes for each one, 
+    public void loadTileMap() {
+        // Populate tileMap and set each tile to a particular type of tile
     for (int i = 0; i < numRows; i++) {
         for (int j = 0; j < numCols; j++) {
             int x = numCols * tileSize;
@@ -117,13 +123,13 @@ public class LevelHandler {
             }
         }
     }
-
     }
 
     public int getTileSize() {
         return tileSize;
     }
 
+    //draws the tiles based on the number and location in the grid
     public void draw(Graphics2D g) {
         g.setColor(Color.WHITE);
         for (int i = 0; i < numRows; i++) {
@@ -147,6 +153,7 @@ public class LevelHandler {
                 }
             }
         }
+        //testing for hitboxes 
         for (int row = 0; row < numRows; row++) {
             for (int col = 0; col < numCols; col++) {
               if (tileMap[row][col].collision == true) {
@@ -156,10 +163,8 @@ public class LevelHandler {
                 g.drawRect(x, y, tileSize, tileSize);
               }
             }
-          }
-          
+          } 
     }
-
 
     public int getNumCols() {
         return numCols;
@@ -171,13 +176,5 @@ public class LevelHandler {
 
     public int getTileType(int row, int col) {
         return grid[row][col];
-    }
-    
-    public Tile getTile(int row, int col) {
-        int tileId = getTileType(row, col);
-        if (tileId >= 0 && tileId < tile.length) {
-            return tile[tileId];
-        }
-        return null;
     }
 }
