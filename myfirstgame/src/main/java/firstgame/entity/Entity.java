@@ -14,6 +14,7 @@ public abstract class Entity {
     public int width, height;
     protected Rectangle hitbox;
     public boolean collisionOn = false;
+    public boolean inAir = true;
 
         public Entity() {
         }

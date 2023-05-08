@@ -21,7 +21,11 @@ public class Player extends Entity {
     private BufferedImage[] highJumpFrames;
     private BufferedImage[] currentSprites;
 
-    private boolean isJumping = false;
+    private float airSpeed = 0;
+    public int gravity = 9; 
+    private float jumpSpeed = -5;
+    private float fallSpeedAfterCollision = 1;
+    private boolean jump = false;
     private int jumpHeight = 50;
     private int jumpDuration = 30;
     private int jumpCounter = 0;
@@ -118,8 +122,8 @@ public class Player extends Entity {
     }
 
     public void jump() {
-        if(!isJumping) {
-            isJumping = true;
+        if(!jump) {
+            jump = true;
             jumpCounter = 0;
         }
     }
@@ -131,10 +135,12 @@ public class Player extends Entity {
         updateAnimation();
         checkCollision();
         movePlayer();
+        
 
         gp.checkImage(null, width, height, gp);
     
         updateHitbox(x+21, y+55);
+        addGravity();
         animationLoop();
             } 
 
@@ -154,12 +160,12 @@ public class Player extends Entity {
             
         } else if (keyH.spacePressed == true) {
             direction = "jump";
-            if (isJumping) {
+            if (jump) {
                 y -= jumpHeight / jumpDuration * jumpCounter * (jumpCounter - jumpDuration);
                 jumpCounter++;
 
                 if (jumpCounter >= jumpDuration) {
-                    isJumping = false;
+                    jump = false;
                 }
             }
         } else {
@@ -204,15 +210,25 @@ public class Player extends Entity {
              case "right":
              x += speed;
              break;
+             //case "falling":
+             //y += gravity;
+             //break;
  
             }
          }
     }
 
+public void addGravity() {
+    if (!jump && inAir == true) {
+        y += gravity; // apply gravity to the player's y coordinate
+    }
+}
+
     //Checks for collision
     public void checkCollision() {
         collisionOn = false;
         gp.checkCollision.checkTile(this, gp.level);
+        gp.checkCollision.checkAir(this, gp.level);
     }
 
     //Loop for animations to play based on size of the specified direction animation movement array

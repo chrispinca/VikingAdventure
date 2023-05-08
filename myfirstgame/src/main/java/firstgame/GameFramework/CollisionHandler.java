@@ -71,7 +71,20 @@ public class CollisionHandler {
                     entityy.collisionOn = true;
                 }
                 break;
-        }
+            
+        }     
+    }
+
+    public void checkAir(Player entityy, LevelHandler level) {
+        entityBottomRow = (entityBottomY + entityy.gravity)/level.getTileSize();
+                tileNum1 = gp.level.tileMap[entityBottomRow][entityLeftCol];
+                tileNum2 = gp.level.tileMap[entityBottomRow][entityRightCol];
+                if(tileNum1.collision == true || tileNum2.collision == true) {
+                    entityy.inAir = false;
+                    System.out.println("Collision detected while falling");
+                } else {
+                    entityy.inAir = true;
+                }
     }
 }
 
