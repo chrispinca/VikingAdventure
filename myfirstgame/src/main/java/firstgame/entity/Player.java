@@ -1,13 +1,14 @@
 package firstgame.entity;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
-
 import firstgame.GameFramework.GamePanel;
 import firstgame.GameFramework.KeyHandler;
+import java.awt.Rectangle;
+
 
 public class Player extends Entity {
     GamePanel gp;
@@ -16,7 +17,24 @@ public class Player extends Entity {
     private BufferedImage[] walkRightFrames;
     private BufferedImage[] walkLeftFrames;
     private BufferedImage[] idleFrames;
+    private BufferedImage[] jumpFrames;
+    private BufferedImage[] highJumpFrames;
     private BufferedImage[] currentSprites;
+
+    private float airSpeed = 0;
+    public int gravity = 9; 
+    private float jumpSpeed = -5;
+    private float fallSpeedAfterCollision = 1;
+    private boolean jump = false;
+    private int jumpHeight = 50;
+    private int jumpDuration = 30;
+    private int jumpCounter = 0;
+
+    public int x;
+    public int y;
+    private int width, height;
+    private Rectangle hitbox;
+
     private int length = 0;
 
     public Player(GamePanel gp, KeyHandler keyH) {
@@ -24,10 +42,13 @@ public class Player extends Entity {
         this.gp = gp;
         this.keyH = keyH;
 
+        //Initializes the hitbox, sets default player values and loads the player animation image arrays
+        initHitbox(gp.level.tileSize - 10, gp.level.tileSize-5);
         setDefaultValues();
-        getPlayerImage();
+        loadPlayerImage();    
     }
 
+    //Sets default player x and y coordinates, speed and animation 
     public void setDefaultValues() {
         x = 100;
         y = 100;
@@ -35,7 +56,8 @@ public class Player extends Entity {
         direction = "idle";
     }
 
-    public void getPlayerImage() {
+    //Loads the player images into an array responsible for player movement animation based on direction
+    public void loadPlayerImage() {
         try {
             walkRightFrames = new BufferedImage[] {
                 ImageIO.read(getClass().getResourceAsStream("/player/Walk/walk1.png")),
@@ -70,29 +92,89 @@ public class Player extends Entity {
                 ImageIO.read(getClass().getResourceAsStream("/player/idle/idle12.png"))
             };
 
+            jumpFrames = new BufferedImage[] {
+                ImageIO.read(getClass().getResourceAsStream("/player/Jump/jump1.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/Jump/jump2.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/Jump/jump3.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/Jump/jump4.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/Jump/jump5.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/Jump/jump6.png"))
+            };
+
+            highJumpFrames = new BufferedImage[] {
+                ImageIO.read(getClass().getResourceAsStream("/player/High_Jump/high_jump1.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/High_Jump/high_jump2.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/High_Jump/high_jump3.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/High_Jump/high_jump4.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/High_Jump/high_jump5.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/High_Jump/high_jump6.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/High_Jump/high_jump7.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/High_Jump/high_jump8.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/High_Jump/high_jump9.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/High_Jump/high_jump10.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/High_Jump/high_jump11.png")),
+                ImageIO.read(getClass().getResourceAsStream("/player/High_Jump/high_jump12.png"))
+            };
+
         }catch(IOException e) {
             e.printStackTrace();
         }
     }
 
+    public void jump() {
+        if(!jump) {
+            jump = true;
+            jumpCounter = 0;
+        }
+    }
+
+    //Updates the player state
     public void update() {
 
+        handleInput();
+        updateAnimation();
+        checkCollision();
+        movePlayer();
+        
+
+        gp.checkImage(null, width, height, gp);
+    
+        updateHitbox(x+21, y+55);
+        addGravity();
+        animationLoop();
+            } 
+
+    //Handles the keyboard input and sets the direction based on the key pressed
+    public void handleInput() {
         if (keyH.upPressed == true) {
             direction = "up";
-            y -= speed;
+            
         } else if (keyH.downPressed == true) {
             direction = "down";
-            y += speed;
+            
         } else if (keyH.leftPressed == true) {
             direction = "left";
-            x -= speed;
+            
         } else if (keyH.rightPressed == true) {
             direction = "right";
-            x += speed;
+            
+        } else if (keyH.spacePressed == true) {
+            direction = "jump";
+            if (jump) {
+                y -= jumpHeight / jumpDuration * jumpCounter * (jumpCounter - jumpDuration);
+                jumpCounter++;
+
+                if (jumpCounter >= jumpDuration) {
+                    jump = false;
+                }
+            }
         } else {
             direction = "idle";
         }
+    }
 
+    //Updates the player current animation and sets the length variable to the size of the specific direction animation array 
+    public void updateAnimation() {
         //Set sprite array to current direction
         if (direction.equals("right")) {
             if (spriteNum > 6) spriteNum = 1;
@@ -102,21 +184,80 @@ public class Player extends Entity {
             if (spriteNum > 6) spriteNum = 1;
             currentSprites = walkLeftFrames;
             length = walkLeftFrames.length;
+        } else if (direction.equals("jump")) {
+            if (spriteNum > 6) spriteNum = 1;
+            currentSprites = jumpFrames;
+            length = jumpFrames.length;
         } else if (direction.equals("idle")) {
             currentSprites = idleFrames;
             length = idleFrames.length;
         }
+    }
 
+    //Moves player on screen based on x and y coordinates if no collision exists 
+    public void movePlayer() {
+        if(collisionOn == false) {
+            switch(direction) {
+             case "up":
+             y -= speed;
+             break;
+             case "down":
+             y += speed;
+             break;
+             case "left":
+             x -= speed;
+             break;
+             case "right":
+             x += speed;
+             break;
+             //case "falling":
+             //y += gravity;
+             //break;
+ 
+            }
+         }
+    }
+
+public void addGravity() {
+    if (!jump && inAir == true) {
+        y += gravity; // apply gravity to the player's y coordinate
+    }
+}
+
+    //Checks for collision
+    public void checkCollision() {
+        collisionOn = false;
+        gp.checkCollision.checkTile(this, gp.level);
+        gp.checkCollision.checkAir(this, gp.level);
+    }
+
+    //Loop for animations to play based on size of the specified direction animation movement array
+    public void animationLoop() {
         spriteCounter++;
         if (spriteCounter > 8) {
             spriteNum = (spriteNum % length) + 1;
             spriteCounter = 0;
         }
-            } 
+    }
 
+    //draws the player and animation images on the screen
     public void draw(Graphics2D g2) {
        BufferedImage image = currentSprites[spriteNum - 1];
        g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
+       
+       g2.setColor(Color.BLACK);
+       //best fit for the player character sprite hitbox to be implemented
+       drawHitbox(g2);
+       //g2.drawRect((int) (x+21),(int) (y+55), gp.tileSize/3 - 10, gp.tileSize/3-5);
+    }
 
+    //Gets the player's x coordinate
+    public int getPlayerX() {
+        return x;
+    }
+
+    //Gets the player's y coordinate
+    public int getPlayerY() {
+        return y;
     }
 }
