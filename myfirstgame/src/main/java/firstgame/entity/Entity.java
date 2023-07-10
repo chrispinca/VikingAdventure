@@ -9,12 +9,17 @@ public abstract class Entity {
     public int x, y;
     public int speed;
     public String direction;
+    public static boolean moveLeft;
+    public static boolean moveRight;
+    public static boolean moveUp;
+    public static boolean moveDown;
     public int spriteCounter = 0;
     public static int spriteNum = 1;
     public int width, height;
     protected Rectangle hitbox;
     public boolean collisionOn = false;
-    public boolean inAir = true;
+    public boolean jumpOn = true;
+    public static boolean onGround = false;
 
         public Entity() {
         }

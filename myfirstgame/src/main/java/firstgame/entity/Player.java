@@ -5,6 +5,8 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import javax.sql.rowset.CachedRowSet;
+
 import firstgame.GameFramework.GamePanel;
 import firstgame.GameFramework.KeyHandler;
 import java.awt.Rectangle;
@@ -21,14 +23,17 @@ public class Player extends Entity {
     private BufferedImage[] highJumpFrames;
     private BufferedImage[] currentSprites;
 
-    private float airSpeed = 0;
-    public int gravity = 9; 
-    private float jumpSpeed = -5;
-    private float fallSpeedAfterCollision = 1;
-    private boolean jump = false;
-    private int jumpHeight = 50;
-    private int jumpDuration = 30;
-    private int jumpCounter = 0;
+    // for jumping/gravity
+    public float gravity = 0.025f * 3 ;
+    public float airspeed = 0f; 
+    public float jumpSpeed = -2.25f * 15;
+    public float fallSpeedAfterCollision = 0.1f;
+    public boolean inAir = false;
+    public int count = 0;
+    public boolean jumpCheck = false;
+
+
+    private boolean left, right, up, down;
 
     public int x;
     public int y;
@@ -121,16 +126,23 @@ public class Player extends Entity {
         }
     }
 
-    public void jump() {
-        if(!jump) {
-            jump = true;
-            jumpCounter = 0;
-        }
-    }
-
     //Updates the player state
     public void update() {
 
+      /*   if (inAir) {
+            if(!collisionOn) {
+                y += airspeed;
+                airspeed += gravity;
+            } else {
+                y = GetEntityYPosUnderRoofOrAboveFloor(hitbox, airspeed);
+            }
+        } */
+        if(onGround) {
+            airspeed = 0;
+        }
+
+        jump();
+        addGravity();
         handleInput();
         updateAnimation();
         checkCollision();
@@ -140,37 +152,42 @@ public class Player extends Entity {
         gp.checkImage(null, width, height, gp);
     
         updateHitbox(x+21, y+55);
-        addGravity();
+        
         animationLoop();
             } 
 
     //Handles the keyboard input and sets the direction based on the key pressed
     public void handleInput() {
-        if (keyH.upPressed == true) {
+        if (keyH.upPressed && !keyH.downPressed) {
             direction = "up";
             
-        } else if (keyH.downPressed == true) {
+        } else if (keyH.downPressed && !keyH.upPressed) {
             direction = "down";
             
-        } else if (keyH.leftPressed == true) {
+        } else if (keyH.leftPressed && !keyH.rightPressed && !keyH.spacePressed) {
             direction = "left";
             
-        } else if (keyH.rightPressed == true) {
+        } else if (keyH.rightPressed && !keyH.leftPressed && !keyH.spacePressed) {
             direction = "right";
             
-        } else if (keyH.spacePressed == true) {
+        } else if (keyH.spacePressed && !keyH.leftPressed && !keyH.rightPressed) {
             direction = "jump";
-            if (jump) {
-                y -= jumpHeight / jumpDuration * jumpCounter * (jumpCounter - jumpDuration);
-                jumpCounter++;
+            jumpCheck = true;
+            jump();
 
-                if (jumpCounter >= jumpDuration) {
-                    jump = false;
-                }
-            }
+        } else if (keyH.spacePressed && keyH.rightPressed) {
+            direction = "jumpRight";
+
+        } else if (keyH.spacePressed && keyH.leftPressed) {
+            direction = "jumpLeft";
+
+        } else if (!keyH.spacePressed) {
+            direction = "idle";
+
         } else {
             direction = "idle";
         }
+        
     }
 
     //Updates the player current animation and sets the length variable to the size of the specific direction animation array 
@@ -184,7 +201,7 @@ public class Player extends Entity {
             if (spriteNum > 6) spriteNum = 1;
             currentSprites = walkLeftFrames;
             length = walkLeftFrames.length;
-        } else if (direction.equals("jump")) {
+        } else if (direction.equals("jump") || direction.equals("jumpRight") || direction.equals("jumpLeft") || !onGround) {
             if (spriteNum > 6) spriteNum = 1;
             currentSprites = jumpFrames;
             length = jumpFrames.length;
@@ -196,39 +213,85 @@ public class Player extends Entity {
 
     //Moves player on screen based on x and y coordinates if no collision exists 
     public void movePlayer() {
+        
         if(collisionOn == false) {
             switch(direction) {
-             case "up":
-             y -= speed;
-             break;
-             case "down":
-             y += speed;
-             break;
-             case "left":
-             x -= speed;
-             break;
-             case "right":
-             x += speed;
-             break;
-             //case "falling":
-             //y += gravity;
-             //break;
- 
+                case "right":
+                    x += speed;
+                    break;
+                case "left":
+                    x -= speed;
+                    break;
+                case "up":
+                    y -= speed;
+                    break;
+                case "down":
+                    y += speed;
+                    break;
+                case "jump":
+                if (jumpOn) {
+                    airspeed = jumpSpeed;
+                    y += airspeed;
+                    airspeed += gravity;
+                    count++;
+                    if (count > 15) {
+                        keyH.spacePressed = false;
+                        jumpCheck = false;
+                        count = 0;
+                }
+                
+                }
+                    
+                    break;
+                case "jumpRight":
+                    airspeed = jumpSpeed;
+                    y += airspeed;
+                    airspeed += gravity;
+                    x += 3;
+                    count++;
+                    if (count > 20) {
+                        keyH.spacePressed = false;
+                        jumpCheck = false;
+                        count = 0;
+                    }
+
+                    break;
+                case "jumpLeft":
+                    airspeed = jumpSpeed;
+                    y += airspeed;
+                    airspeed += gravity;
+                    x -= 3;
+                    count++;
+                    if (count > 20) {
+                        keyH.spacePressed = false;
+                        jumpCheck = false;
+                        count = 0;
+                    }
+                    break;
             }
+            
+            
          }
     }
 
-public void addGravity() {
-    if (!jump && inAir == true) {
-        y += gravity; // apply gravity to the player's y coordinate
+public void jump() {
+    if (onGround) {
+        airspeed = 0f;
+                   
     }
+}
+
+  
+
+public void addGravity() {
+    
 }
 
     //Checks for collision
     public void checkCollision() {
         collisionOn = false;
         gp.checkCollision.checkTile(this, gp.level);
-        gp.checkCollision.checkAir(this, gp.level);
+        gp.checkCollision.checkGround(this, gp.level);
     }
 
     //Loop for animations to play based on size of the specified direction animation movement array
@@ -260,4 +323,45 @@ public void addGravity() {
     public int getPlayerY() {
         return y;
     }
+
+    public boolean isLeft() {
+        return left;
+    }
+
+    public void setLeft(boolean left) {
+        this.left = left;
+    }
+
+    public boolean isRight() {
+        return right;
+    }
+
+    public void setRight(boolean right) {
+        this.right = right;
+    }
+
+    public boolean isUp() {
+        return up;
+    }
+
+    public void setUp(boolean up) {
+        this.up = up;
+    }
+
+    public boolean isDown() {
+        return down;
+    }
+
+    public void setDown(boolean down) {
+        this.down = down;
+    }
+
+    public void getImage(String imageFile) {
+    try {
+        ImageIO.read(getClass().getResourceAsStream(imageFile));
+    }catch(IOException e) {
+        e.printStackTrace();
+    }
+    }
+    
 }

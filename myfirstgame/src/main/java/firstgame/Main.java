@@ -15,5 +15,5 @@ public class Main
         gamePanel.startGameThread();
         Screen.createScreen(gamePanel);
     }
-}
+} 
  

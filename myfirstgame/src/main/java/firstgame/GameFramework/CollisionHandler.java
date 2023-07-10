@@ -52,7 +52,7 @@ public class CollisionHandler {
                 if(tileNum1.collision == true || tileNum2.collision == true) {
                     entityy.collisionOn = true;
                 }
-                break;
+                break; 
 
             case "left":
                 entityLeftCol = (entityLeftX - entityy.speed)/level.getTileSize();
@@ -71,20 +71,50 @@ public class CollisionHandler {
                     entityy.collisionOn = true;
                 }
                 break;
+
+            case "jump":
+                entityTopRow = (entityTopY - entityy.speed)/level.getTileSize();
+                tileNum1 = gp.level.tileMap[entityTopRow][entityLeftCol];
+                tileNum2 = gp.level.tileMap[entityTopRow][entityRightCol];
+                if(tileNum1.collision == true || tileNum2.collision == true) {
+                    entityy.collisionOn = true;
+                    entityy.jumpOn = false;
+                } else {
+                    entityy.jumpOn = true;
+                }
+                break;
             
         }     
     }
 
-    public void checkAir(Player entityy, LevelHandler level) {
-        entityBottomRow = (entityBottomY + entityy.gravity)/level.getTileSize();
-                tileNum1 = gp.level.tileMap[entityBottomRow][entityLeftCol];
-                tileNum2 = gp.level.tileMap[entityBottomRow][entityRightCol];
-                if(tileNum1.collision == true || tileNum2.collision == true) {
-                    entityy.inAir = false;
-                    System.out.println("Collision detected while falling");
-                } else {
-                    entityy.inAir = true;
+    public void checkGround(Player entityy, LevelHandler level) {
+        // Check if the player is on the ground
+        entityBottomRow = (entityBottomY + entityy.speed)/level.getTileSize();
+        tileNum1 = gp.level.tileMap[entityBottomRow][entityLeftCol];
+        tileNum2 = gp.level.tileMap[entityBottomRow][entityRightCol];
+        if (tileNum1.collision || tileNum2.collision) {
+            // Player is on the ground
+            entityy.onGround = true;
+            int tileTopY = entityBottomRow * level.getTileSize();
+            entityy.y = tileTopY - entityy.getHitboxHeight() - 56; // adjust player y-coordinate
+        } else {
+            // Player is falling
+            entityy.onGround = false;
+            for (int i = entityBottomRow + 1; i < level.getNumRows(); i++) {
+                Tile tile1 = gp.level.tileMap[i][entityLeftCol];
+                Tile tile2 = gp.level.tileMap[i][entityRightCol];
+                if (tile1.collision || tile2.collision) {
+                    // Player has landed on a tile
+                    int tileTopY = i * level.getTileSize();
+                    entityy.y = tileTopY - entityy.getHitboxHeight() - 55; // adjust player y-coordinate
+                    break;
                 }
+            }
+        }
     }
+
+
+    
+    
 }
 

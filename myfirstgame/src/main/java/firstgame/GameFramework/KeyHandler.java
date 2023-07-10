@@ -3,6 +3,8 @@ package firstgame.GameFramework;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import firstgame.entity.Entity;
+
 public class KeyHandler implements KeyListener {
 
     public boolean upPressed, downPressed, leftPressed, rightPressed, spacePressed;
@@ -27,9 +29,10 @@ public class KeyHandler implements KeyListener {
         if(code == KeyEvent.VK_D || code == KeyEvent.VK_RIGHT) {
             rightPressed = true;
         }
-        if(code == KeyEvent.VK_SPACE) {
+        if(code == KeyEvent.VK_SPACE && firstgame.entity.Player.onGround == true) {
             //if first space press, a simple jump is triggered
             spacePressed = true;
+            firstgame.entity.Player.onGround = false;
         }
     }
 
@@ -50,7 +53,7 @@ public class KeyHandler implements KeyListener {
             rightPressed = false;
         }
         if(code == KeyEvent.VK_SPACE) {
-            spacePressed = false;
+            
         }
     }
     
