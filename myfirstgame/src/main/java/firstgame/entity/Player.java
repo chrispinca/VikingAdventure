@@ -24,9 +24,9 @@ public class Player extends Entity {
     private BufferedImage[] currentSprites;
 
     // for jumping/gravity
-    public float gravity = 0.025f * 3 ;
+    public float gravity = 0.25f * 3 ;
     public float airspeed = 0f; 
-    public float jumpSpeed = -2.25f * 16;
+    public float jumpSpeed = -2.25f * 4;
     public float fallSpeedAfterCollision = 0.1f;
     public boolean inAir = false;
     public int count = 0;
@@ -40,7 +40,6 @@ public class Player extends Entity {
     public int y;
     private int width, height;
     private Rectangle hitbox;
-
     private int length = 0;
 
     public Player(GamePanel gp, KeyHandler keyH) {
@@ -121,7 +120,6 @@ public class Player extends Entity {
                 ImageIO.read(getClass().getResourceAsStream("/player/High_Jump/high_jump11.png")),
                 ImageIO.read(getClass().getResourceAsStream("/player/High_Jump/high_jump12.png"))
             };
-
         }catch(IOException e) {
             e.printStackTrace();
         }
@@ -129,27 +127,26 @@ public class Player extends Entity {
 
     //Updates the player state
     public void update() {
-        
+
+        addGravity();
         handleInput();
         updateAnimation();
         checkCollision();
         movePlayer();
-        
+        checkCollision();
         gp.checkImage(null, width, height, gp);
-    
         updateHitbox(x+21, y+55);
-        
         animationLoop();
             } 
 
     //Handles the keyboard input and sets the direction based on the key pressed
     public void handleInput() {
-        if (keyH.spacePressed ) {
-            
-                direction = "jump";
-            
-            //jump();
-            
+        if (keyH.spacePressed && count < 8) {
+            direction = "jump";
+        } else if (keyH.spacePressed && count < 8 && keyH.rightPressed) {
+            direction = "jumpRight";
+        } else if (keyH.spacePressed && count < 8 && keyH.leftPressed) {
+            direction = "jumpLeft";
         } else if (keyH.downPressed && !keyH.upPressed) {
             direction = "down";
             
@@ -164,7 +161,6 @@ public class Player extends Entity {
         }  else {
             direction = "idle";
         }
-        
     }
 
     //Updates the player current animation and sets the length variable to the size of the specific direction animation array 
@@ -211,22 +207,23 @@ public class Player extends Entity {
                     y += airspeed;
                     airspeed += gravity;
                     count++;
-               
-                    if (count > 15) {
+
+                    if (count > 8) {
                         keyH.spacePressed = false;
                         jumpCheck = false;
                         count = 0;
-                }
-                
+                    }
                     break;
-               /*  case "jumpRight":
+                case "jumpRight":
                     airspeed = jumpSpeed;
                     y += airspeed;
                     airspeed += gravity;
+
                     x += speed;
+
                     count++;
-                 
-                    if (count > 15) {
+
+                    if (count > 8) {
                         keyH.spacePressed = false;
                         jumpCheck = false;
                         count = 0;
@@ -236,22 +233,21 @@ public class Player extends Entity {
                     airspeed = jumpSpeed;
                     y += airspeed;
                     airspeed += gravity;
+
                     x -= speed;
+
                     count++;
-                
-                    if (count > 15) {
+
+                    if (count > 8) {
                         keyH.spacePressed = false;
                         jumpCheck = false;
                         count = 0;
                     }
-                
-                    break; */
+                    break;
             }
             
             
-         } else if (direction == "jump") {
-            keyH.spacePressed = false;
-         }
+         } 
     }
 
     //Checks for collision
@@ -270,6 +266,16 @@ public class Player extends Entity {
         }
     }
 
+    public void addGravity() {
+        if(!onGround) {
+            y += 5;
+        } else {
+            count = 0;
+        }
+        
+       
+    }
+
     //draws the player and animation images on the screen
     public void draw(Graphics2D g2) {
        BufferedImage image = currentSprites[spriteNum - 1];
@@ -282,6 +288,7 @@ public class Player extends Entity {
         int rectHeight = 5;
         g2.fillRect(x, y + gp.tileSize, rectWidth, rectHeight);
     }
+    
        
        g2.setColor(Color.BLACK);
        //best fit for the player character sprite hitbox to be implemented
