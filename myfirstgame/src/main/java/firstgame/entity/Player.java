@@ -26,7 +26,7 @@ public class Player extends Entity {
     // for jumping/gravity
     public float gravity = 0.025f * 3 ;
     public float airspeed = 0f; 
-    public float jumpSpeed = -2.25f * 15;
+    public float jumpSpeed = -2.25f * 16;
     public float fallSpeedAfterCollision = 0.1f;
     public boolean inAir = false;
     public int count = 0;
@@ -128,27 +128,12 @@ public class Player extends Entity {
 
     //Updates the player state
     public void update() {
-
-      /*   if (inAir) {
-            if(!collisionOn) {
-                y += airspeed;
-                airspeed += gravity;
-            } else {
-                y = GetEntityYPosUnderRoofOrAboveFloor(hitbox, airspeed);
-            }
-        } */
-        if(onGround) {
-            airspeed = 0;
-        }
-
-        jump();
-        addGravity();
+        
         handleInput();
         updateAnimation();
         checkCollision();
         movePlayer();
         
-
         gp.checkImage(null, width, height, gp);
     
         updateHitbox(x+21, y+55);
@@ -158,33 +143,24 @@ public class Player extends Entity {
 
     //Handles the keyboard input and sets the direction based on the key pressed
     public void handleInput() {
-        if (keyH.upPressed && !keyH.downPressed) {
-            direction = "up";
+        if (keyH.spacePressed ) {
+            
+                direction = "jump";
+            
+            //jump();
             
         } else if (keyH.downPressed && !keyH.upPressed) {
             direction = "down";
             
-        } else if (keyH.leftPressed && !keyH.rightPressed && !keyH.spacePressed) {
+        } else if (keyH.leftPressed && !keyH.rightPressed ) {
             direction = "left";
             
-        } else if (keyH.rightPressed && !keyH.leftPressed && !keyH.spacePressed) {
+        } else if (keyH.rightPressed && !keyH.leftPressed ) {
             direction = "right";
             
-        } else if (keyH.spacePressed && !keyH.leftPressed && !keyH.rightPressed) {
-            direction = "jump";
-            jumpCheck = true;
-            jump();
-
-        } else if (keyH.spacePressed && keyH.rightPressed) {
-            direction = "jumpRight";
-
-        } else if (keyH.spacePressed && keyH.leftPressed) {
-            direction = "jumpLeft";
-
-        } else if (!keyH.spacePressed) {
-            direction = "idle";
-
-        } else {
+        } else if (keyH.upPressed && !keyH.downPressed) {
+            direction = "up";
+        }  else {
             direction = "idle";
         }
         
@@ -229,63 +205,59 @@ public class Player extends Entity {
                     y += speed;
                     break;
                 case "jump":
-                if (jumpOn) {
+    
                     airspeed = jumpSpeed;
                     y += airspeed;
                     airspeed += gravity;
                     count++;
+               
                     if (count > 15) {
                         keyH.spacePressed = false;
                         jumpCheck = false;
                         count = 0;
                 }
                 
-                }
-                    
                     break;
-                case "jumpRight":
+               /*  case "jumpRight":
                     airspeed = jumpSpeed;
                     y += airspeed;
                     airspeed += gravity;
-                    x += 3;
+                    x += speed;
                     count++;
-                    if (count > 20) {
+                 
+                    if (count > 15) {
                         keyH.spacePressed = false;
                         jumpCheck = false;
                         count = 0;
                     }
-
                     break;
                 case "jumpLeft":
                     airspeed = jumpSpeed;
                     y += airspeed;
                     airspeed += gravity;
-                    x -= 3;
+                    x -= speed;
                     count++;
-                    if (count > 20) {
+                
+                    if (count > 15) {
                         keyH.spacePressed = false;
                         jumpCheck = false;
                         count = 0;
                     }
-                    break;
+                
+                    break; */
             }
             
             
          }
     }
 
-public void jump() {
+/*public void jump() {
     if (onGround) {
         airspeed = 0f;
-                   
+        jumpCheck = true;
+        jumpOn = true;             
     }
-}
-
-  
-
-public void addGravity() {
-    
-}
+}*/
 
     //Checks for collision
     public void checkCollision() {
@@ -307,6 +279,14 @@ public void addGravity() {
     public void draw(Graphics2D g2) {
        BufferedImage image = currentSprites[spriteNum - 1];
        g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
+
+       // Draw a green rectangle below the player when onGround is true
+    if (onGround) {
+        g2.setColor(Color.GREEN);
+        int rectWidth = gp.tileSize;
+        int rectHeight = 5;
+        g2.fillRect(x, y + gp.tileSize, rectWidth, rectHeight);
+    }
        
        g2.setColor(Color.BLACK);
        //best fit for the player character sprite hitbox to be implemented

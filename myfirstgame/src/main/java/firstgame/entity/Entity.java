@@ -19,7 +19,7 @@ public abstract class Entity {
     protected Rectangle hitbox;
     public boolean collisionOn = false;
     public boolean jumpOn = true;
-    public static boolean onGround = false;
+    public boolean onGround = false;
 
         public Entity() {
         }

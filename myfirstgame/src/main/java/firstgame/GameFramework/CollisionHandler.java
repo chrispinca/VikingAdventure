@@ -73,16 +73,38 @@ public class CollisionHandler {
                 break;
 
             case "jump":
-                entityTopRow = (entityTopY - entityy.speed)/level.getTileSize();
+                entityTopRow = (int) ((entityTopY - entityy.airspeed-5)/level.getTileSize());
                 tileNum1 = gp.level.tileMap[entityTopRow][entityLeftCol];
                 tileNum2 = gp.level.tileMap[entityTopRow][entityRightCol];
                 if(tileNum1.collision == true || tileNum2.collision == true) {
+                    entityy.collisionOn = true;
+                    
+                } 
+                break;
+
+            case "jumpRight":
+                entityTopRow = (int) ((entityTopY - entityy.airspeed-5)/level.getTileSize() + 2);
+                entityRightCol = (int) ((entityRightX + entityy.speed)/level.getTileSize());
+                tileNum1 = gp.level.tileMap[entityTopRow][entityRightCol];
+                if(tileNum1.collision == true) {
                     entityy.collisionOn = true;
                     entityy.jumpOn = false;
                 } else {
                     entityy.jumpOn = true;
                 }
-                break;
+            break;
+
+            case "jumpLeft":
+                entityTopRow = (int) ((entityTopY - entityy.airspeed-5)/level.getTileSize() + 2);
+                entityLeftCol = (entityLeftX - entityy.speed)/level.getTileSize();
+                tileNum1 = gp.level.tileMap[entityTopRow][entityLeftCol];
+                if(tileNum1.collision == true) {
+                    entityy.collisionOn = true;
+                    entityy.jumpOn = false;
+                } else {
+                    entityy.jumpOn = true;
+                }
+            break;
             
         }     
     }
@@ -95,6 +117,7 @@ public class CollisionHandler {
         if (tileNum1.collision || tileNum2.collision) {
             // Player is on the ground
             entityy.onGround = true;
+            
             int tileTopY = entityBottomRow * level.getTileSize();
             entityy.y = tileTopY - entityy.getHitboxHeight() - 56; // adjust player y-coordinate
         } else {
@@ -110,6 +133,11 @@ public class CollisionHandler {
                     break;
                 }
             }
+        }
+        if (entityy.onGround) {
+            entityy.jumpCheck = false;
+            entityy.jumpOn = false;
+            entityy.airspeed = 0;
         }
     }
 

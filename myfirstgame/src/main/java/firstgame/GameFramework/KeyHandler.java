@@ -25,14 +25,16 @@ public class KeyHandler implements KeyListener {
         }
         if(code == KeyEvent.VK_A || code == KeyEvent.VK_LEFT) {
             leftPressed = true;
+            spacePressed = false;
         }
         if(code == KeyEvent.VK_D || code == KeyEvent.VK_RIGHT) {
             rightPressed = true;
+            spacePressed = false;
         }
-        if(code == KeyEvent.VK_SPACE && firstgame.entity.Player.onGround == true) {
+        if(code == KeyEvent.VK_SPACE) {
             //if first space press, a simple jump is triggered
             spacePressed = true;
-            firstgame.entity.Player.onGround = false;
+            
         }
     }
 
