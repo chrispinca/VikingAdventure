@@ -31,6 +31,7 @@ public class Player extends Entity {
     public boolean inAir = false;
     public int count = 0;
     public boolean jumpCheck = false;
+    
 
 
     private boolean left, right, up, down;
@@ -248,16 +249,10 @@ public class Player extends Entity {
             }
             
             
+         } else if (direction == "jump") {
+            keyH.spacePressed = false;
          }
     }
-
-/*public void jump() {
-    if (onGround) {
-        airspeed = 0f;
-        jumpCheck = true;
-        jumpOn = true;             
-    }
-}*/
 
     //Checks for collision
     public void checkCollision() {
