@@ -4,7 +4,7 @@
     <property name="java.specification.version" value="15"/>
     <property name="sun.cpu.isalist" value="amd64"/>
     <property name="sun.jnu.encoding" value="Cp1252"/>
-    <property name="java.class.path" value="C:\Users\Chris\Desktop\personalgameproj\myfirstgame\target\test-classes;C:\Users\Chris\Desktop\personalgameproj\myfirstgame\target\classes;C:\Users\Chris\.m2\repository\junit\junit\4.11\junit-4.11.jar;C:\Users\Chris\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;"/>
+    <property name="java.class.path" value="c:\Users\Chris\Desktop\personalgameproj\myfirstgame\target\test-classes;c:\Users\Chris\Desktop\personalgameproj\myfirstgame\target\classes;C:\Users\Chris\.m2\repository\junit\junit\4.11\junit-4.11.jar;C:\Users\Chris\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;C:\Users\Chris\.m2\repository\org\json\json\20230227\json-20230227.jar;"/>
     <property name="java.vm.vendor" value="Oracle Corporation"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="user.variant" value=""/>
@@ -15,9 +15,9 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="CA"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-15.0.2\bin"/>
-    <property name="sun.java.command" value="C:\Users\Chris\AppData\Local\Temp\surefire9043379526441283987\surefirebooter12346850388553474007.jar C:\Users\Chris\AppData\Local\Temp\surefire9043379526441283987 2023-05-01T20-48-13_612-jvmRun1 surefire4625660651761407319tmp surefire_043249921359982252tmp"/>
+    <property name="sun.java.command" value="C:\Users\Chris\AppData\Local\Temp\surefire11812701500772405463\surefirebooter18048249446247436783.jar C:\Users\Chris\AppData\Local\Temp\surefire11812701500772405463 2023-07-24T15-14-11_089-jvmRun1 surefire16067447743524585716tmp surefire_016950437204547623487tmp"/>
     <property name="jdk.debug" value="release"/>
-    <property name="surefire.test.class.path" value="C:\Users\Chris\Desktop\personalgameproj\myfirstgame\target\test-classes;C:\Users\Chris\Desktop\personalgameproj\myfirstgame\target\classes;C:\Users\Chris\.m2\repository\junit\junit\4.11\junit-4.11.jar;C:\Users\Chris\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;"/>
+    <property name="surefire.test.class.path" value="c:\Users\Chris\Desktop\personalgameproj\myfirstgame\target\test-classes;c:\Users\Chris\Desktop\personalgameproj\myfirstgame\target\classes;C:\Users\Chris\.m2\repository\junit\junit\4.11\junit-4.11.jar;C:\Users\Chris\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;C:\Users\Chris\.m2\repository\org\json\json\20230227\json-20230227.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="C:\Users\Chris"/>
     <property name="user.language" value="en"/>
@@ -25,12 +25,12 @@
     <property name="java.version.date" value="2021-01-19"/>
     <property name="java.home" value="C:\Program Files\Java\jdk-15.0.2"/>
     <property name="file.separator" value="\"/>
-    <property name="basedir" value="C:\Users\Chris\Desktop\personalgameproj\myfirstgame"/>
+    <property name="basedir" value="c:\Users\Chris\Desktop\personalgameproj\myfirstgame"/>
     <property name="java.vm.compressedOopsMode" value="Zero based"/>
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\Chris\AppData\Local\Temp\surefire9043379526441283987\surefirebooter12346850388553474007.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\Chris\AppData\Local\Temp\surefire11812701500772405463\surefirebooter18048249446247436783.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="15.0.2+7-27"/>
@@ -44,11 +44,11 @@
     <property name="java.vendor.url.bug" value="https://bugreport.java.com/bugreport/"/>
     <property name="java.io.tmpdir" value="C:\Users\Chris\AppData\Local\Temp\"/>
     <property name="java.version" value="15.0.2"/>
-    <property name="user.dir" value="C:\Users\Chris\Desktop\personalgameproj\myfirstgame"/>
+    <property name="user.dir" value="c:\Users\Chris\Desktop\personalgameproj\myfirstgame"/>
     <property name="os.arch" value="amd64"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
     <property name="sun.os.patch.level" value=""/>
-    <property name="java.library.path" value="C:\Program Files\Java\jdk-15.0.2\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;D:\javaEclipseJDK\bin;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Intel\Shared Libraries\redist\intel64\compiler;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;D:\putty\;D:\Brackets\command;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\MinGW\bin;C:\Program Files\Git\cmd;C:\Program Files\Java\jdk-15.0.2\bin;C:\Program Files\apache-maven-3.9.0-bin\apache-maven-3.9.0\bin;D:\javaEclipseJDK\bin;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Intel\Shared Libraries\redist\intel64\compiler;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;D:\putty\;D:\Brackets\command;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\MinGW\bin;C:\Program Files\Git\cmd;C:\Program Files\Java\jdk-15.0.2\bin;C:\Program Files\apache-maven-3.9.0-bin\apache-maven-3.9.0\bin;C:\Users\Chris\AppData\Local\Microsoft\WindowsApps;;D:\Microsoft VS Code\bin;C:\Program Files\apache-maven-3.9.0-bin\apache-maven-3.9.0\bin;;."/>
+    <property name="java.library.path" value="C:\Program Files\Java\jdk-15.0.2\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;D:\javaEclipseJDK\bin;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Intel\Shared Libraries\redist\intel64\compiler;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;D:\putty\;D:\Brackets\command;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\MinGW\bin;C:\Program Files\Git\cmd;C:\Program Files\Java\jdk-15.0.2\bin;C:\Program Files\apache-maven-3.9.0-bin\apache-maven-3.9.0\bin;C:\Program Files\MATLAB\R2023a\bin;D:\javaEclipseJDK\bin;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Intel\Shared Libraries\redist\intel64\compiler;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;D:\putty\;D:\Brackets\command;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\MinGW\bin;C:\Program Files\Git\cmd;C:\Program Files\Java\jdk-15.0.2\bin;C:\Program Files\apache-maven-3.9.0-bin\apache-maven-3.9.0\bin;C:\Users\Chris\AppData\Local\Microsoft\WindowsApps;;D:\Microsoft VS Code\bin;C:\Program Files\apache-maven-3.9.0-bin\apache-maven-3.9.0\bin;;."/>
     <property name="java.vm.info" value="mixed mode, sharing"/>
     <property name="java.vendor" value="Oracle Corporation"/>
     <property name="java.vm.version" value="15.0.2+7-27"/>

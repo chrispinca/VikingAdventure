@@ -122,6 +122,12 @@ public class CollisionHandler {
             
             int tileTopY = entityBottomRow * level.getTileSize();
             entityy.y = tileTopY - entityy.getHitboxHeight() - 56; // adjust player y-coordinate
+        } else if (tileNum1.collision || tileNum2.collision && entityy.onGround) {
+            // Player is on the ground
+            entityy.onGround = true;
+            
+            int tileTopY = entityBottomRow * level.getTileSize();
+            entityy.y = tileTopY - entityy.getHitboxHeight() - 56; // adjust player y-coordinate
         } else {
             // Player is falling
             entityy.onGround = false;

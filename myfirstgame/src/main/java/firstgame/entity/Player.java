@@ -24,9 +24,9 @@ public class Player extends Entity {
     private BufferedImage[] currentSprites;
 
     // for jumping/gravity
-    public float gravity = 0.25f * 3 ;
+    public float jumpGravity = 0.45f * 3 ;
     public float airspeed = 0f; 
-    public float jumpSpeed = -2.25f * 4;
+    public float jumpSpeed = -2.25f * 5;
     public float fallSpeedAfterCollision = 0.1f;
     public boolean inAir = false;
     public int count = 0;
@@ -40,7 +40,11 @@ public class Player extends Entity {
     public int y;
     private int width, height;
     private Rectangle hitbox;
+    private int hitbox_X_Offset;
+    private int hitbox_Y_Offset;
     private int length = 0;
+    private int maxLengthJump = 8;
+    public int constantGravity = 5;
 
     public Player(GamePanel gp, KeyHandler keyH) {
 
@@ -141,11 +145,11 @@ public class Player extends Entity {
 
     //Handles the keyboard input and sets the direction based on the key pressed
     public void handleInput() {
-        if (keyH.spacePressed && count < 8) {
+        if (keyH.spacePressed && count < maxLengthJump) {
             direction = "jump";
-        } else if (keyH.spacePressed && count < 8 && keyH.rightPressed) {
+        } else if (keyH.spacePressed && count < maxLengthJump && keyH.rightPressed) {
             direction = "jumpRight";
-        } else if (keyH.spacePressed && count < 8 && keyH.leftPressed) {
+        } else if (keyH.spacePressed && count < maxLengthJump && keyH.leftPressed) {
             direction = "jumpLeft";
         } else if (keyH.downPressed && !keyH.upPressed) {
             direction = "down";
@@ -205,10 +209,10 @@ public class Player extends Entity {
     
                     airspeed = jumpSpeed;
                     y += airspeed;
-                    airspeed += gravity;
+                    airspeed += jumpGravity;
                     count++;
 
-                    if (count > 8) {
+                    if (count > maxLengthJump) {
                         keyH.spacePressed = false;
                         jumpCheck = false;
                         count = 0;
@@ -217,13 +221,13 @@ public class Player extends Entity {
                 case "jumpRight":
                     airspeed = jumpSpeed;
                     y += airspeed;
-                    airspeed += gravity;
+                    airspeed += jumpGravity;
 
                     x += speed;
 
                     count++;
 
-                    if (count > 8) {
+                    if (count > maxLengthJump) {
                         keyH.spacePressed = false;
                         jumpCheck = false;
                         count = 0;
@@ -232,13 +236,13 @@ public class Player extends Entity {
                 case "jumpLeft":
                     airspeed = jumpSpeed;
                     y += airspeed;
-                    airspeed += gravity;
+                    airspeed += jumpGravity;
 
                     x -= speed;
 
                     count++;
 
-                    if (count > 8) {
+                    if (count > maxLengthJump) {
                         keyH.spacePressed = false;
                         jumpCheck = false;
                         count = 0;
@@ -268,7 +272,7 @@ public class Player extends Entity {
 
     public void addGravity() {
         if(!onGround) {
-            y += 5;
+            y += constantGravity;
         } else {
             count = 0;
         }
