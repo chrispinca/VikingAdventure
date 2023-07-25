@@ -24,9 +24,9 @@ public class Player extends Entity {
     private BufferedImage[] currentSprites;
 
     // for jumping/gravity
-    public float jumpGravity = 0.45f * 3 ;
+    public float jumpGravity = 0.35f * 3 ;
     public float airspeed = 0f; 
-    public float jumpSpeed = -2.25f * 5;
+    public float jumpSpeed = -2.5f * 4;
     public float fallSpeedAfterCollision = 0.1f;
     public boolean inAir = false;
     public int count = 0;
@@ -141,6 +141,7 @@ public class Player extends Entity {
         gp.checkImage(null, width, height, gp);
         updateHitbox(x+21, y+55);
         animationLoop();
+        checkCollision();
             } 
 
     //Handles the keyboard input and sets the direction based on the key pressed

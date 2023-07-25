@@ -75,7 +75,7 @@ public class CollisionHandler {
                 break;
 
             case "jump":
-                entityTopRow = (int) ((entityTopY - entityy.airspeed-5)/level.getTileSize());
+                entityTopRow = (int) ((entityTopY - entityy.airspeed)/level.getTileSize());
                 tileNum1 = gp.level.tileMap[entityTopRow][entityLeftCol];
                 tileNum2 = gp.level.tileMap[entityTopRow][entityRightCol];
                 if(tileNum1.collision == true || tileNum2.collision == true) {
@@ -116,13 +116,7 @@ public class CollisionHandler {
         entityBottomRow = (entityBottomY + entityy.speed)/level.getTileSize();
         tileNum1 = gp.level.tileMap[entityBottomRow][entityLeftCol];
         tileNum2 = gp.level.tileMap[entityBottomRow][entityRightCol];
-        if (tileNum1.collision || tileNum2.collision && entityy.collisionOn == false) {
-            // Player is on the ground
-            entityy.onGround = true;
-            
-            int tileTopY = entityBottomRow * level.getTileSize();
-            entityy.y = tileTopY - entityy.getHitboxHeight() - 56; // adjust player y-coordinate
-        } else if (tileNum1.collision || tileNum2.collision && entityy.onGround) {
+        if ((tileNum1.collision || tileNum2.collision && entityy.collisionOn == false) || (tileNum1.collision || tileNum2.collision && entityy.onGround)) {
             // Player is on the ground
             entityy.onGround = true;
             
