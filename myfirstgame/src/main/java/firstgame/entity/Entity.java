@@ -8,7 +8,7 @@ import java.awt.Rectangle;
 public abstract class Entity {
     public int x, y;
     public int speed;
-    public String direction;
+    public Enum direction;
     public static boolean moveLeft;
     public static boolean moveRight;
     public static boolean moveUp;

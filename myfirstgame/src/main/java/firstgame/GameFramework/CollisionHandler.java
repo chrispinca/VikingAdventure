@@ -37,7 +37,7 @@ public class CollisionHandler {
         collisionCalc(entityy, level);
 
         switch(entityy.direction) {
-            case "up":
+            case UP:
                 entityTopRow = (entityTopY - entityy.speed)/level.getTileSize();
                 tileNum1 = gp.level.tileMap[entityTopRow][entityLeftCol];
                 tileNum2 = gp.level.tileMap[entityTopRow][entityRightCol];
@@ -45,7 +45,7 @@ public class CollisionHandler {
                     entityy.collisionOn = true;
                 }
                 break;
-            case "down":
+            case DOWN:
                 entityBottomRow = (entityBottomY + entityy.speed)/level.getTileSize();
                 tileNum1 = gp.level.tileMap[entityBottomRow][entityLeftCol];
                 tileNum2 = gp.level.tileMap[entityBottomRow][entityRightCol];
@@ -54,7 +54,7 @@ public class CollisionHandler {
                 }
                 break; 
 
-            case "left":
+            case LEFT:
                 entityLeftCol = (entityLeftX - entityy.speed)/level.getTileSize();
                 tileNum1 = gp.level.tileMap[entityTopRow][entityLeftCol];
                 tileNum2 = gp.level.tileMap[entityBottomRow][entityLeftCol];
@@ -64,7 +64,7 @@ public class CollisionHandler {
                 }
                 break;
 
-            case "right":
+            case RIGHT:
                 entityRightCol = (entityRightX + entityy.speed)/level.getTileSize();
                 tileNum1 = gp.level.tileMap[entityTopRow][entityRightCol];
                 tileNum2 = gp.level.tileMap[entityBottomRow][entityRightCol];
@@ -74,7 +74,7 @@ public class CollisionHandler {
                 }
                 break;
 
-            case "jump":
+            case JUMP:
                 entityTopRow = (int) ((entityTopY - entityy.airspeed)/level.getTileSize());
                 tileNum1 = gp.level.tileMap[entityTopRow][entityLeftCol];
                 tileNum2 = gp.level.tileMap[entityTopRow][entityRightCol];
@@ -84,7 +84,7 @@ public class CollisionHandler {
                 } 
                 break;
 
-            case "jumpRight":
+            case JUMP_RIGHT:
                 entityTopRow = (int) ((entityTopY - entityy.airspeed-5)/level.getTileSize() + 2);
                 entityRightCol = (int) ((entityRightX + entityy.speed)/level.getTileSize());
                 tileNum1 = gp.level.tileMap[entityTopRow][entityRightCol];
@@ -96,7 +96,7 @@ public class CollisionHandler {
                 }
             break;
 
-            case "jumpLeft":
+            case JUMP_LEFT:
                 entityTopRow = (int) ((entityTopY - entityy.airspeed-5)/level.getTileSize() + 2);
                 entityLeftCol = (entityLeftX - entityy.speed)/level.getTileSize();
                 tileNum1 = gp.level.tileMap[entityTopRow][entityLeftCol];

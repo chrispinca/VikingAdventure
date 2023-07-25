@@ -58,7 +58,6 @@ public class GamePanel extends JPanel implements Runnable{
         gameThread.start();
     }
 
-    @Override
     public void run() { //this will update and repaint the game in its current state
 
         double drawInterval = 1000000000/FPS;
