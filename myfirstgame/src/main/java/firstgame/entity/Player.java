@@ -62,7 +62,7 @@ public class Player extends Entity {
         x = 100;
         y = 100;
         speed = 4;
-        direction = direction.IDLE;
+        direction = Direction.IDLE;
     }
 
     // Loads the player images into an array responsible for player movement
@@ -148,24 +148,24 @@ public class Player extends Entity {
     // Handles the keyboard input and sets the direction based on the key pressed
     public void handleInput() {
         if (keyH.spacePressed && count < maxLengthJump) {
-            direction = direction.JUMP;
+            direction = Direction.JUMP;
         } else if (keyH.spacePressed && count < maxLengthJump && keyH.rightPressed) {
-            direction = direction.JUMP_RIGHT;
+            direction = Direction.JUMP_RIGHT;
         } else if (keyH.spacePressed && count < maxLengthJump && keyH.leftPressed) {
-            direction = direction.JUMP_LEFT;
+            direction = Direction.JUMP_LEFT;
         } else if (keyH.downPressed && !keyH.upPressed) {
-            direction = direction.DOWN;
+            direction = Direction.DOWN;
 
         } else if (keyH.leftPressed && !keyH.rightPressed) {
-            direction = direction.LEFT;
+            direction = Direction.LEFT;
 
         } else if (keyH.rightPressed && !keyH.leftPressed) {
-            direction = direction.RIGHT;
+            direction = Direction.RIGHT;
 
         } else if (keyH.upPressed && !keyH.downPressed) {
-            direction = direction.UP;
+            direction = Direction.UP;
         } else {
-            direction = direction.IDLE;
+            direction = Direction.IDLE;
         }
     }
 
@@ -173,23 +173,23 @@ public class Player extends Entity {
     // of the specific direction animation array
     public void updateAnimation() {
         // Set sprite array to current direction
-        if (direction == direction.RIGHT) {
+        if (direction == Direction.RIGHT) {
             if (spriteNum > 6)
                 spriteNum = 1;
             currentSprites = walkRightFrames;
             length = walkRightFrames.length;
-        } else if (direction == direction.LEFT) {
+        } else if (direction == Direction.LEFT) {
             if (spriteNum > 6)
                 spriteNum = 1;
             currentSprites = walkLeftFrames;
             length = walkLeftFrames.length;
-        } else if (direction == direction.JUMP || direction == direction.JUMP_RIGHT || direction == direction.JUMP_LEFT
+        } else if (direction == Direction.JUMP || direction == Direction.JUMP_RIGHT || direction == Direction.JUMP_LEFT
                 || !onGround) {
             if (spriteNum > 6)
                 spriteNum = 1;
             currentSprites = jumpFrames;
             length = jumpFrames.length;
-        } else if (direction == direction.IDLE) {
+        } else if (direction == Direction.IDLE) {
             currentSprites = idleFrames;
             length = idleFrames.length;
         }
@@ -200,6 +200,8 @@ public class Player extends Entity {
 
         if (collisionOn == false) {
             switch (direction) {
+                case IDLE:
+                    break;
                 case RIGHT:
                     x += speed;
                     break;

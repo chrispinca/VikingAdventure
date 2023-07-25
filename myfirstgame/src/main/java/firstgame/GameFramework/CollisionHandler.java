@@ -7,24 +7,25 @@ import firstgame.entity.Levels.Tile;
 
 public class CollisionHandler {
 
-    int entityLeftX, entityRightX, entityTopY, 
-    entityBottomY, entityTopRow, entityBottomRow, 
-    entityLeftCol, entityRightCol;
-        
+    int entityLeftX, entityRightX, entityTopY,
+            entityBottomY, entityTopRow, entityBottomRow,
+            entityLeftCol, entityRightCol;
+
     Tile tileNum1, tileNum2 = null;
 
     GamePanel gp;
-    
+
     public CollisionHandler(GamePanel gp) {
         this.gp = gp;
     }
 
-    //makes the calculations for the player's hitbox and accounts for the displacement of the actual hitbox vs the entire player tile
+    // makes the calculations for the player's hitbox and accounts for the
+    // displacement of the actual hitbox vs the entire player tile
     public void collisionCalc(Player entityy, LevelHandler level) {
         entityLeftX = entityy.x + 21;
-        entityRightX = entityy.x + 21+ entityy.getHitboxWidth();
+        entityRightX = entityy.x + 21 + entityy.getHitboxWidth();
         entityTopY = entityy.y + 55;
-        entityBottomY = entityy.y+ 55 + entityy.getHitboxHeight();
+        entityBottomY = entityy.y + 55 + entityy.getHitboxHeight();
 
         entityTopRow = entityTopY / level.getTileSize();
         entityBottomRow = entityBottomY / level.getTileSize();
@@ -32,94 +33,96 @@ public class CollisionHandler {
         entityRightCol = entityRightX / level.getTileSize();
     }
 
-    //checks for collision with the closest two tiles in the direction the player is moving in
+    // checks for collision with the closest two tiles in the direction the player
+    // is moving in
     public void checkTile(Player entityy, LevelHandler level) {
         collisionCalc(entityy, level);
 
-        switch(entityy.direction) {
+        switch (entityy.direction) {
             case UP:
-                entityTopRow = (entityTopY - entityy.speed)/level.getTileSize();
+                entityTopRow = (entityTopY - entityy.speed) / level.getTileSize();
                 tileNum1 = gp.level.tileMap[entityTopRow][entityLeftCol];
                 tileNum2 = gp.level.tileMap[entityTopRow][entityRightCol];
-                if(tileNum1.collision == true || tileNum2.collision == true) {
+                if (tileNum1.collision == true || tileNum2.collision == true) {
                     entityy.collisionOn = true;
                 }
                 break;
             case DOWN:
-                entityBottomRow = (entityBottomY + entityy.speed)/level.getTileSize();
+                entityBottomRow = (entityBottomY + entityy.speed) / level.getTileSize();
                 tileNum1 = gp.level.tileMap[entityBottomRow][entityLeftCol];
                 tileNum2 = gp.level.tileMap[entityBottomRow][entityRightCol];
-                if(tileNum1.collision == true || tileNum2.collision == true) {
+                if (tileNum1.collision == true || tileNum2.collision == true) {
                     entityy.collisionOn = true;
                 }
-                break; 
+                break;
 
             case LEFT:
-                entityLeftCol = (entityLeftX - entityy.speed)/level.getTileSize();
+                entityLeftCol = (entityLeftX - entityy.speed) / level.getTileSize();
                 tileNum1 = gp.level.tileMap[entityTopRow][entityLeftCol];
                 tileNum2 = gp.level.tileMap[entityBottomRow][entityLeftCol];
-                if(tileNum1.collision == true || tileNum2.collision == true) {
+                if (tileNum1.collision == true || tileNum2.collision == true) {
                     entityy.collisionOn = true;
                     entityy.jumpOn = false;
                 }
                 break;
 
             case RIGHT:
-                entityRightCol = (entityRightX + entityy.speed)/level.getTileSize();
+                entityRightCol = (entityRightX + entityy.speed) / level.getTileSize();
                 tileNum1 = gp.level.tileMap[entityTopRow][entityRightCol];
                 tileNum2 = gp.level.tileMap[entityBottomRow][entityRightCol];
-                if(tileNum1.collision == true || tileNum2.collision == true) {
+                if (tileNum1.collision == true || tileNum2.collision == true) {
                     entityy.collisionOn = true;
                     entityy.jumpOn = false;
                 }
                 break;
 
             case JUMP:
-                entityTopRow = (int) ((entityTopY - entityy.airspeed)/level.getTileSize());
+                entityTopRow = (int) ((entityTopY - entityy.airspeed) / level.getTileSize());
                 tileNum1 = gp.level.tileMap[entityTopRow][entityLeftCol];
                 tileNum2 = gp.level.tileMap[entityTopRow][entityRightCol];
-                if(tileNum1.collision == true || tileNum2.collision == true) {
+                if (tileNum1.collision == true || tileNum2.collision == true) {
                     entityy.collisionOn = true;
-                    
-                } 
+
+                }
                 break;
 
             case JUMP_RIGHT:
-                entityTopRow = (int) ((entityTopY - entityy.airspeed-5)/level.getTileSize() + 2);
-                entityRightCol = (int) ((entityRightX + entityy.speed)/level.getTileSize());
+                entityTopRow = (int) ((entityTopY - entityy.airspeed - 5) / level.getTileSize() + 2);
+                entityRightCol = (int) ((entityRightX + entityy.speed) / level.getTileSize());
                 tileNum1 = gp.level.tileMap[entityTopRow][entityRightCol];
-                if(tileNum1.collision == true) {
+                if (tileNum1.collision == true) {
                     entityy.collisionOn = true;
                     entityy.jumpOn = false;
                 } else {
                     entityy.jumpOn = true;
                 }
-            break;
+                break;
 
             case JUMP_LEFT:
-                entityTopRow = (int) ((entityTopY - entityy.airspeed-5)/level.getTileSize() + 2);
-                entityLeftCol = (entityLeftX - entityy.speed)/level.getTileSize();
+                entityTopRow = (int) ((entityTopY - entityy.airspeed - 5) / level.getTileSize() + 2);
+                entityLeftCol = (entityLeftX - entityy.speed) / level.getTileSize();
                 tileNum1 = gp.level.tileMap[entityTopRow][entityLeftCol];
-                if(tileNum1.collision == true) {
+                if (tileNum1.collision == true) {
                     entityy.collisionOn = true;
                     entityy.jumpOn = false;
                 } else {
                     entityy.jumpOn = true;
                 }
-            break;
-            
-        }     
+                break;
+
+        }
     }
 
     public void checkGround(Player entityy, LevelHandler level) {
         // Check if the player is on the ground
-        entityBottomRow = (entityBottomY + entityy.speed)/level.getTileSize();
+        entityBottomRow = (entityBottomY + entityy.speed) / level.getTileSize();
         tileNum1 = gp.level.tileMap[entityBottomRow][entityLeftCol];
         tileNum2 = gp.level.tileMap[entityBottomRow][entityRightCol];
-        if ((tileNum1.collision || tileNum2.collision && entityy.collisionOn == false) || (tileNum1.collision || tileNum2.collision && entityy.onGround)) {
+        if ((tileNum1.collision || tileNum2.collision && entityy.collisionOn == false)
+                || (tileNum1.collision || tileNum2.collision && entityy.onGround)) {
             // Player is on the ground
             entityy.onGround = true;
-            
+
             int tileTopY = entityBottomRow * level.getTileSize();
             entityy.y = tileTopY - entityy.getHitboxHeight() - 56; // adjust player y-coordinate
         } else {
@@ -131,7 +134,8 @@ public class CollisionHandler {
                 if (tile1.collision || tile2.collision) {
                     // Player has landed on a tile
                     int tileTopY = i * level.getTileSize();
-                    //entityy.y = tileTopY - entityy.getHitboxHeight() - 55; // adjust player y-coordinate
+                    // entityy.y = tileTopY - entityy.getHitboxHeight() - 55; // adjust player
+                    // y-coordinate
                     break;
                 }
             }
@@ -143,8 +147,4 @@ public class CollisionHandler {
         }
     }
 
-
-    
-    
 }
-
