@@ -39,8 +39,8 @@ public class Player extends Entity {
     public int y;
     private int width, height;
     private Rectangle hitbox;
-    private int hitbox_X_Offset;
-    private int hitbox_Y_Offset;
+    private int hitbox_X_Offset = 10;
+    private int hitbox_Y_Offset = 5;
     private int length = 0;
     private int maxLengthJump = 8;
     public int constantGravity = 5;
@@ -52,7 +52,7 @@ public class Player extends Entity {
 
         // Initializes the hitbox, sets default player values and loads the player
         // animation image arrays
-        initHitbox(gp.level.tileSize - 10, gp.level.tileSize - 5);
+        initHitbox(gp.level.tileSize - hitbox_X_Offset, gp.level.tileSize - hitbox_Y_Offset);
         setDefaultValues();
         loadPlayerImage();
     }
@@ -231,9 +231,7 @@ public class Player extends Entity {
                     airspeed = jumpSpeed;
                     y += airspeed;
                     airspeed += jumpGravity;
-
                     x += speed;
-
                     count++;
 
                     if (count > maxLengthJump) {

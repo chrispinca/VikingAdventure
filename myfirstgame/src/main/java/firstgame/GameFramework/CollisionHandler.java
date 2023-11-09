@@ -77,12 +77,15 @@ public class CollisionHandler {
                 break;
 
             case JUMP:
-                entityTopRow = (int) ((entityTopY - entityy.airspeed) / level.getTileSize());
+                entityTopRow = (int) ((entityTopY - 5) / level.getTileSize());
                 tileNum1 = gp.level.tileMap[entityTopRow][entityLeftCol];
                 tileNum2 = gp.level.tileMap[entityTopRow][entityRightCol];
                 if (tileNum1.collision == true || tileNum2.collision == true) {
                     entityy.collisionOn = true;
+                    entityy.jumpOn = false;
 
+                } else {
+                    entityy.jumpOn = true;
                 }
                 break;
 
