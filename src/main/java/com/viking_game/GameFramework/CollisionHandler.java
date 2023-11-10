@@ -1,9 +1,9 @@
-package firstgame.GameFramework;
+package com.viking_game.GameFramework;
 
-import firstgame.entity.Entity;
-import firstgame.entity.Player;
-import firstgame.entity.Levels.LevelHandler;
-import firstgame.entity.Levels.Tile;
+import com.viking_game.entity.Entity;
+import com.viking_game.entity.Player;
+import com.viking_game.Levels.LevelHandler;
+import com.viking_game.Levels.Tile;
 
 public class CollisionHandler {
 

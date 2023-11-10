@@ -1,4 +1,4 @@
-package firstgame.entity;
+package com.viking_game.entity;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -7,9 +7,9 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.sql.rowset.CachedRowSet;
 
-import firstgame.GameFramework.GamePanel;
-import firstgame.GameFramework.KeyHandler;
-import firstgame.entity.Direction;
+import com.viking_game.GameFramework.GamePanel;
+import com.viking_game.GameFramework.KeyHandler;
+import com.viking_game.entity.Direction;
 import java.awt.Rectangle;
 
 public class Player extends Entity {

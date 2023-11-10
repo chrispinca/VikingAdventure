@@ -1,4 +1,4 @@
-package firstgame.entity.Levels;
+package com.viking_game.Levels;
 
 import javax.imageio.ImageIO;
 import java.awt.Graphics2D;
@@ -11,7 +11,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import firstgame.entity.Levels.Tile;
+import com.viking_game.Levels.Tile;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

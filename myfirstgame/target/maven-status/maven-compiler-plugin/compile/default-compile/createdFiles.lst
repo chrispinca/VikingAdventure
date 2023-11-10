@@ -1,3 +1,12 @@
-firstgame\UI\Screen.class
-firstgame\entity\Player.class
+firstgame\entity\Levels\LevelHandler.class
+firstgame\GameFramework\CollisionHandler$1.class
+firstgame\Main.class
+firstgame\GameFramework\CollisionHandler.class
+firstgame\GameFramework\GamePanel.class
+firstgame\GameFramework\KeyHandler.class
+firstgame\entity\Direction.class
 firstgame\entity\Entity.class
+firstgame\entity\Player.class
+firstgame\UI\Screen.class
+firstgame\entity\Player$1.class
+firstgame\entity\Levels\Tile.class

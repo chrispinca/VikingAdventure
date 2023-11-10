@@ -1,10 +1,10 @@
-package firstgame.GameFramework;
+package com.viking_game.GameFramework;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-import firstgame.entity.Player;
-import firstgame.entity.Levels.LevelHandler;
+import com.viking_game.entity.Player;
+import com.viking_game.Levels.LevelHandler;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
