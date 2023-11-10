@@ -26,6 +26,10 @@ public class GamePanel extends JPanel implements Runnable {
     final int screenWidth = tileSize * maxScreenCol;
     final int screenHeight = tileSize * maxScreenRow;
 
+    // Create array to store the levels and an int to track current level
+    String Level[] = { "/maptest.json", "/level2.json" };
+    int currentLevel = 0;
+
     // FPS
     int FPS = 60;
 
@@ -37,7 +41,7 @@ public class GamePanel extends JPanel implements Runnable {
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
 
-    public LevelHandler level = new LevelHandler("/maptest.json");
+    public LevelHandler level = new LevelHandler(Level[currentLevel]);
 
     Player player = new Player(this, keyH);
     public CollisionHandler checkCollision = new CollisionHandler(this);
@@ -88,7 +92,6 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
-
         player.update();
     }
 
@@ -114,6 +117,17 @@ public class GamePanel extends JPanel implements Runnable {
         player.draw(g2);
 
         g2.dispose();
+    }
+
+    public void nextLevel() {
+        currentLevel++;
+        if (currentLevel < Level.length) {
+            level = new LevelHandler(Level[currentLevel]);
+            player.setDefaultValues();
+        } else {
+            currentLevel = 0;
+            level = new LevelHandler(Level[currentLevel]);
+        }
     }
 
 }

@@ -26,7 +26,6 @@ public class LevelHandler {
     protected Tile[] tile;
 
     public LevelHandler(String filename) {
-
         tile = new Tile[10];
         loadGrid(filename);
         getTileImage();
