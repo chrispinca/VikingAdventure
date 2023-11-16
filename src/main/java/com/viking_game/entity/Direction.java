@@ -9,5 +9,6 @@ public enum Direction {
     JUMP,
     JUMP_RIGHT,
     JUMP_LEFT,
-    ATTACK_RIGHT
+    ATTACK_RIGHT,
+    ATTACK_LEFT
 }

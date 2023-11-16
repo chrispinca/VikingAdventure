@@ -23,6 +23,7 @@ public class Player extends Entity {
     private BufferedImage[] highJumpFrames;
     private BufferedImage[] currentSprites;
     private BufferedImage[] attackFrames;
+    private BufferedImage[] attackLeftFrames;
 
     // for jumping/gravity
     public float jumpGravity = 0.35f * 3;
@@ -33,6 +34,7 @@ public class Player extends Entity {
     public int count = 0;
     public boolean jumpCheck = false;
     public Direction direction;
+    public Direction lastDirection = Direction.IDLE;
 
     private boolean left, right, up, down;
 
@@ -131,7 +133,14 @@ public class Player extends Entity {
                     ImageIO.read(getClass().getResourceAsStream("/player/Attack/attack0.png")),
                     ImageIO.read(getClass().getResourceAsStream("/player/Attack/attack1.png")),
                     ImageIO.read(getClass().getResourceAsStream("/player/Attack/attack2.png")),
-                    ImageIO.read(getClass().getResourceAsStream("/player/Attack/attack4.png"))
+                    ImageIO.read(getClass().getResourceAsStream("/player/Attack/attack3.png"))
+            };
+
+            attackLeftFrames = new BufferedImage[] {
+                    ImageIO.read(getClass().getResourceAsStream("/player/Attack/attackLeft0.png")),
+                    ImageIO.read(getClass().getResourceAsStream("/player/Attack/attackLeft1.png")),
+                    ImageIO.read(getClass().getResourceAsStream("/player/Attack/attackLeft2.png")),
+                    ImageIO.read(getClass().getResourceAsStream("/player/Attack/attackLeft3.png"))
             };
         } catch (IOException e) {
             e.printStackTrace();
@@ -159,21 +168,24 @@ public class Player extends Entity {
             direction = Direction.JUMP;
         } else if (keyH.spacePressed && count < maxLengthJump && keyH.rightPressed) {
             direction = Direction.JUMP_RIGHT;
+            lastDirection = Direction.RIGHT;
         } else if (keyH.spacePressed && count < maxLengthJump && keyH.leftPressed) {
             direction = Direction.JUMP_LEFT;
+            lastDirection = Direction.LEFT;
         } else if (keyH.downPressed && !keyH.upPressed) {
             direction = Direction.DOWN;
-
         } else if (keyH.leftPressed && !keyH.rightPressed) {
             direction = Direction.LEFT;
-
+            lastDirection = Direction.LEFT;
         } else if (keyH.rightPressed && !keyH.leftPressed) {
             direction = Direction.RIGHT;
-
+            lastDirection = Direction.RIGHT;
         } else if (keyH.upPressed && !keyH.downPressed) {
             direction = Direction.UP;
-        } else if (keyH.leftMousePressed) {
+        } else if (keyH.leftMousePressed && (lastDirection == Direction.RIGHT || lastDirection == Direction.IDLE)) {
             direction = Direction.ATTACK_RIGHT;
+        } else if (keyH.leftMousePressed && lastDirection == Direction.LEFT) {
+            direction = Direction.ATTACK_LEFT;
         } else {
             direction = Direction.IDLE;
         }
@@ -198,6 +210,12 @@ public class Player extends Entity {
                 spriteNum = 1;
             currentSprites = attackFrames;
             length = attackFrames.length;
+            handleAttackAnimation();
+        } else if (direction == Direction.ATTACK_LEFT) {
+            if (spriteNum > 4)
+                spriteNum = 1;
+            currentSprites = attackLeftFrames;
+            length = attackLeftFrames.length;
             handleAttackAnimation();
         } else if (direction == Direction.JUMP || direction == Direction.JUMP_RIGHT || direction == Direction.JUMP_LEFT
                 || !onGround) {
