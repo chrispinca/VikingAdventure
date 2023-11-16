@@ -38,7 +38,7 @@ public class GamePanel extends JPanel implements Runnable {
     float playerY = 100;
     int playerSpeed = 4;
 
-    KeyHandler keyH = new KeyHandler();
+    InputHandler keyH = new InputHandler();
     Thread gameThread;
 
     public LevelHandler level = new LevelHandler(Level[currentLevel]);
@@ -51,6 +51,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
+        this.addMouseListener(keyH);
         this.setFocusable(true);
     }
 

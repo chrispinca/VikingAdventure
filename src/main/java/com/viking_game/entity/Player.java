@@ -8,13 +8,13 @@ import javax.imageio.ImageIO;
 import javax.sql.rowset.CachedRowSet;
 
 import com.viking_game.GameFramework.GamePanel;
-import com.viking_game.GameFramework.KeyHandler;
+import com.viking_game.GameFramework.InputHandler;
 import com.viking_game.entity.Direction;
 import java.awt.Rectangle;
 
 public class Player extends Entity {
     GamePanel gp;
-    KeyHandler keyH;
+    InputHandler keyH;
 
     private BufferedImage[] walkRightFrames;
     private BufferedImage[] walkLeftFrames;
@@ -22,6 +22,7 @@ public class Player extends Entity {
     private BufferedImage[] jumpFrames;
     private BufferedImage[] highJumpFrames;
     private BufferedImage[] currentSprites;
+    private BufferedImage[] attackFrames;
 
     // for jumping/gravity
     public float jumpGravity = 0.35f * 3;
@@ -45,7 +46,7 @@ public class Player extends Entity {
     private int maxLengthJump = 8;
     public int constantGravity = 5;
 
-    public Player(GamePanel gp, KeyHandler keyH) {
+    public Player(GamePanel gp, InputHandler keyH) {
 
         this.gp = gp;
         this.keyH = keyH;
@@ -125,6 +126,13 @@ public class Player extends Entity {
                     ImageIO.read(getClass().getResourceAsStream("/player/High_Jump/high_jump11.png")),
                     ImageIO.read(getClass().getResourceAsStream("/player/High_Jump/high_jump12.png"))
             };
+
+            attackFrames = new BufferedImage[] {
+                    ImageIO.read(getClass().getResourceAsStream("/player/Attack/attack0.png")),
+                    ImageIO.read(getClass().getResourceAsStream("/player/Attack/attack1.png")),
+                    ImageIO.read(getClass().getResourceAsStream("/player/Attack/attack2.png")),
+                    ImageIO.read(getClass().getResourceAsStream("/player/Attack/attack4.png"))
+            };
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -164,6 +172,8 @@ public class Player extends Entity {
 
         } else if (keyH.upPressed && !keyH.downPressed) {
             direction = Direction.UP;
+        } else if (keyH.leftMousePressed) {
+            direction = Direction.ATTACK_RIGHT;
         } else {
             direction = Direction.IDLE;
         }
@@ -183,6 +193,12 @@ public class Player extends Entity {
                 spriteNum = 1;
             currentSprites = walkLeftFrames;
             length = walkLeftFrames.length;
+        } else if (direction == Direction.ATTACK_RIGHT) {
+            if (spriteNum > 4)
+                spriteNum = 1;
+            currentSprites = attackFrames;
+            length = attackFrames.length;
+            handleAttackAnimation();
         } else if (direction == Direction.JUMP || direction == Direction.JUMP_RIGHT || direction == Direction.JUMP_LEFT
                 || !onGround) {
             if (spriteNum > 6)
@@ -283,7 +299,12 @@ public class Player extends Entity {
         } else {
             count = 0;
         }
+    }
 
+    private void handleAttackAnimation() {
+        if (spriteNum == length) {
+            keyH.leftMousePressed = false;
+        }
     }
 
     // draws the player and animation images on the screen
