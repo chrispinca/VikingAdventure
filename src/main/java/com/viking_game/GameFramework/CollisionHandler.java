@@ -24,8 +24,8 @@ public class CollisionHandler {
     public void collisionCalc(Player entityy, LevelHandler level) {
         entityLeftX = entityy.x + 21;
         entityRightX = entityy.x + 21 + entityy.getHitboxWidth();
-        entityTopY = entityy.y + 55;
-        entityBottomY = entityy.y + 55 + entityy.getHitboxHeight();
+        entityTopY = entityy.y + 54;
+        entityBottomY = entityy.y + 54 + entityy.getHitboxHeight();
 
         entityTopRow = entityTopY / level.getTileSize();
         entityBottomRow = entityBottomY / level.getTileSize();
@@ -127,7 +127,7 @@ public class CollisionHandler {
             entityy.onGround = true;
 
             int tileTopY = entityBottomRow * level.getTileSize();
-            entityy.y = tileTopY - entityy.getHitboxHeight() - 56; // adjust player y-coordinate
+            entityy.y = tileTopY - entityy.getHitboxHeight() - 55; // adjust player y-coordinate
         } else {
             // Player is falling
             entityy.onGround = false;

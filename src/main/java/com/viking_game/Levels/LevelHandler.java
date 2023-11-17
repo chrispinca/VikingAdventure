@@ -155,6 +155,7 @@ public class LevelHandler {
                 }
             }
         }
+        /* 
         // testing for hitboxes
         for (int row = 0; row < numRows; row++) {
             for (int col = 0; col < numCols; col++) {
@@ -165,7 +166,7 @@ public class LevelHandler {
                     g.drawRect(x, y, tileSize, tileSize);
                 }
             }
-        }
+        } */
     }
 
     public int getNumCols() {

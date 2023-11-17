@@ -332,16 +332,16 @@ public class Player extends Entity {
         g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
 
         // Draw a green rectangle below the player when onGround is true
-        if (onGround) {
+       /*  if (onGround) {
             g2.setColor(Color.GREEN);
             int rectWidth = gp.tileSize;
             int rectHeight = 5;
             g2.fillRect(x, y + gp.tileSize, rectWidth, rectHeight);
-        }
+        }*/
 
         g2.setColor(Color.BLACK);
         // best fit for the player character sprite hitbox to be implemented
-        drawHitbox(g2);
+        //drawHitbox(g2);
         // g2.drawRect((int) (x+21),(int) (y+55), gp.tileSize/3 - 10, gp.tileSize/3-5);
     }
 

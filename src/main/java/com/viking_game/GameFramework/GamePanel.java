@@ -105,6 +105,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void update() {
         player.update();
         updateCoins();
+        checkCoinCollisions();
     }
 
     public void paintComponent(Graphics g) {
@@ -156,6 +157,15 @@ public class GamePanel extends JPanel implements Runnable {
     private void drawCoins(Graphics2D g2) {
         for (Coin coin : coins) {
             coin.draw(g2);
+        }
+    }
+
+    private void checkCoinCollisions() {
+        for (Coin coin : coins) {
+            if (coin.checkCollision(player)) {
+                coins.remove(coin);
+                break;
+            }
         }
     }
 
