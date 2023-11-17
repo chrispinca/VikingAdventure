@@ -1,4 +1,4 @@
-package com.viking_game.entity;
+package com.viking_game.Entity;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -7,9 +7,10 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.sql.rowset.CachedRowSet;
 
+import com.viking_game.Entity.Direction;
 import com.viking_game.GameFramework.GamePanel;
 import com.viking_game.GameFramework.InputHandler;
-import com.viking_game.entity.Direction;
+
 import java.awt.Rectangle;
 
 public class Player extends Entity {

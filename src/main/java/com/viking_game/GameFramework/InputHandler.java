@@ -2,9 +2,10 @@ package com.viking_game.GameFramework;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.*;
 
-import com.viking_game.entity.Entity;
+import com.viking_game.Entity.Entity;
+
+import java.awt.event.*;
 
 public class InputHandler extends MouseAdapter implements KeyListener {
 

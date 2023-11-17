@@ -3,8 +3,12 @@ package com.viking_game.GameFramework;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-import com.viking_game.entity.Player;
+import com.viking_game.Entity.Player;
 import com.viking_game.Levels.LevelHandler;
+import com.viking_game.Items.Coin;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -20,11 +24,16 @@ public class GamePanel extends JPanel implements Runnable {
     final int initialTileSize = 32;
     public final int scale = 3; // scale for TileSize
 
+    private List<Coin> coins = new ArrayList<>();
+
     public final int tileSize = initialTileSize * scale;
     final int maxScreenCol = 10;
     final int maxScreenRow = 7;
     final int screenWidth = tileSize * maxScreenCol;
     final int screenHeight = tileSize * maxScreenRow;
+
+    // Items
+    Coin coin;
 
     // Create array to store the levels and an int to track current level
     String Level[] = { "/maptest.json", "/level2.json" };
@@ -53,6 +62,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.addKeyListener(keyH);
         this.addMouseListener(keyH);
         this.setFocusable(true);
+        initializeCoins();
     }
 
     public void startGameThread() {
@@ -94,6 +104,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void update() {
         player.update();
+        updateCoins();
     }
 
     public void paintComponent(Graphics g) {
@@ -116,6 +127,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         level.draw(g2);
         player.draw(g2);
+        drawCoins(g2);
 
         g2.dispose();
     }
@@ -128,6 +140,22 @@ public class GamePanel extends JPanel implements Runnable {
         } else {
             currentLevel = 0;
             level = new LevelHandler(Level[currentLevel]);
+        }
+    }
+
+    private void initializeCoins() {
+        coins.add(new Coin(100, 354));
+    }
+
+    private void updateCoins() {
+        for (Coin coin : coins) {
+            coin.coinAnimationLoop();
+        }
+    }
+
+    private void drawCoins(Graphics2D g2) {
+        for (Coin coin : coins) {
+            coin.draw(g2);
         }
     }
 

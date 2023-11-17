@@ -1,4 +1,4 @@
-package com.viking_game.entity;
+package com.viking_game.Entity;
 
 public enum Direction {
     IDLE,
